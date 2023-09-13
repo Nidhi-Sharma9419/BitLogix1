@@ -6,7 +6,7 @@ export default function Recipient() {
     <>
       <div className="flex flex-wrap justify-evenly items-center min-h-[100vh]">
         <img
-          src="../recipient-home.png"
+          src="../recipient-home.avif"
           alt="img-vect"
           className="w-[35rem] h-[35rem]"
         />
