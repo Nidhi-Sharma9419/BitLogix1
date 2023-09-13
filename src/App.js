@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Ma
 
 
 import ConnectWallet from './components/ConnectWallet';
+import Recipient from './components/Recipient';
 import SelectRole from './components/SelectRole';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<ConnectWallet/>} />
         <Route path="/SelectRole" element={<SelectRole/>}/>
+        <Route path="/recipient" element={<Recipient />} />
       </Routes>
     </Router>
   );
