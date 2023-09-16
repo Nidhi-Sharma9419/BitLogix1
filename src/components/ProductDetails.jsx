@@ -41,7 +41,7 @@ export default function ProductDetails() {
                 />
               </div>
               <div>
-                <label className="block text-gray-700">Details of Business</label>
+                <label className="block text-gray-700">Price per unit</label>
                 <input
                   type="text"
                   name="number"
