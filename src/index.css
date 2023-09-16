@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'MyFont'; /* You can choose a name for your font family */
+    src: url('../public/Pantelleria.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }

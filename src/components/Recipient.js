@@ -8,7 +8,7 @@ export default function Recipient() {
         <img
           src="../recipient-home.avif"
           alt="img-vect"
-          className="w-[35rem] h-[35rem]"
+          className="lg:w-[35rem] lg:h-[35rem]"
         />
         <div
           className="px-5 flex items-center justify-center"
@@ -16,6 +16,7 @@ export default function Recipient() {
         >
           <div className="w-full h-100">
             <div>
+              <span className="relative mt-6 md:mt-0 bottom-5 lg:bottom-20 font-Pantel text-4xl text-indigo-500 tracking-wider font-medium underline block text-center">RECIPIENT</span>
               <label className="block text-gray-700">Full Name</label>
               <input
                 type="text"
