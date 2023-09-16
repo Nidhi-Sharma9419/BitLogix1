@@ -18,7 +18,7 @@ export default function Delivery() {
             </div>
           </div>
           <div className='flex flex-wrap flex-col justify-center mt-12 gap-2 mx-12 md:mx-0'>
-            <button className=' p-2 bg-sky-500 rounded-lg text-white text-2xl font-bold'>In-Transit</button>
+            <button className=' p-2 bg-indigo-500 rounded-lg text-white text-2xl font-bold'>In-Transit</button>
             <p className='font-semibold text-2xl'>Your product will be delivered in 8 days</p>
           </div>
         </div>
