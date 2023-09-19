@@ -3,7 +3,7 @@ import  React,{ useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; // Make sure to import Switch
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { useWeb3React } from '@web3-react/core';
-import { Box, Typography } from '@mui/material';
+import { Box, Select, Typography } from '@mui/material';
 import { Button } from '@mui/base';
 import Home from './components/Home';
 import AboutUs from './AboutUs';
@@ -13,6 +13,7 @@ import Delivery from './components/Delivery';
 import Enterprise from './components/Enterprise';
 import ProductDetails from './components/ProductDetails';
 import AddDelivery from './components/AddDelivery';
+import SelectRole from "./components/SelectRole";
 import "react-datepicker/dist/react-datepicker.css";
 
 const injectedConnector = new InjectedConnector({
@@ -30,7 +31,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/select" element={<Home />}></Route>
+        <Route path="/select" element={<SelectRole/>}></Route>
         <Route path= "/aboutus" element={<AboutUs />} ></Route>
         
         <Route path="/recipient" element={<Recipient />} />
