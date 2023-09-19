@@ -30,6 +30,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />}></Route>
+        <Route path="/select" element={<Home />}></Route>
         <Route path= "/aboutus" element={<AboutUs />} ></Route>
         
         <Route path="/recipient" element={<Recipient />} />
