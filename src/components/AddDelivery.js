@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Navbar from './Navbar';
 
 export default function AddDelivery() {
   const PickUp_Address = "5331 Rexford Court, Montgomery AL 36116";
@@ -15,6 +16,7 @@ export default function AddDelivery() {
 
   return (
     <>
+    <Navbar/>
     <span className='font-Pantel text-4xl text-[#39FF14] tracking-wider font-medium underline block text-center mt-5'>ENTERPRISE</span>
       <div className='flex flex-row-reverse flex-wrap justify-center lg:justify-evenly items-center lg:min-h-[100vh] min-h-[80vh]'>
         <img src={"/takeoff.PNG"} alt='product-img' className='lg:w-[50rem] lg:h-[30rem] w-[10rem] h-[10rem]' />

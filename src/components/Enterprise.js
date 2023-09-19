@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 
 export default function Enterprise() {
     const [isloading, setIsLoading] = useState(false);
@@ -14,6 +15,7 @@ export default function Enterprise() {
 
     return (
       <>
+      <Navbar/>
         <div className="flex flex-row-reverse flex-wrap justify-evenly items-center min-h-[100vh]">
           <img
             src="/enterprise.png"
