@@ -60,7 +60,7 @@ export default function Navbar() {
       <img src={"/bitlogixlogo-transparent.png"} alt="" className="w-[10%] rounded-b-2xl" />
       <nav className="w-full flex justify-between md:ml-5">
         <Link
-          to="/Home"
+          to="/"
           className="rounded-lg m-1 p-1 h-[40px] md:h-auto md:p-2 text-center bg-slate-500 hover:bg-slate-400 text-white"
         >
           Home
