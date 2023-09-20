@@ -30,12 +30,12 @@ export default function Enterprise() {
         }
   
         setIsLoading(true); 
-  
+        const signer = await provider.getSigner();
         const bitLogixContractAddress = '0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e'; 
         const bitLogixContract = new ethers.Contract(
           bitLogixContractAddress,
           BitLogixABI.abi,
-          provider
+          signer
         );
   
         const tx = await bitLogixContract.registerEnterprise(
