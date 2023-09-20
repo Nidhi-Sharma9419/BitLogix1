@@ -8,16 +8,22 @@ import { Button } from '@mui/base';
 import Home from './Home';
 import AboutUs from './AboutUs';
 import Recipient from './components/Recipient';
-import SelectRole from './components/SelectRole';
+import SelectRole from './SelectRole';
 import Delivery from './components/Delivery';
 import Entity from './components/Entity';
 import ProductDetails from './components/ProductDetails';
 import AddDelivery from './components/AddDelivery';
 import "react-datepicker/dist/react-datepicker.css";
 
+//import BitLogixABI from './artifacts/contracts/BitLogix.json';
+
+
 const injectedConnector = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42, 11155111, 80001],
 });
+
+
+const ContractAddress="0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e";
 
 
 function App() {
@@ -46,6 +52,17 @@ function App() {
       console.error("Failed to connect", error);
     }
   };
+
+
+
+
+
+ 
+
+  
+
+
+
 
   return (
     <Router>

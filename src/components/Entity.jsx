@@ -1,12 +1,59 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom';
 
+import { useWeb3React } from '@web3-react/core';
+import { ethers } from 'ethers';
+import BitLogixABI from './artifacts/contracts/BitLogix.sol/BitLogix.json';
+import provider from './ethers';
+
 export default function Enterprise() {
     const [isloading, setIsLoading] = useState(false);
 
     const [fullName, setFullName] = useState();
     const [detail, setDetails] = useState();
     const [id, setID] = useState();
+
+    
+  const { account } = useWeb3React();
+
+  
+  
+ 
+  
+
+
+    async function registerEnterprise() {
+      try {
+        if (!account) {
+          console.error('No connected Ethereum account');
+          return;
+        }
+  
+        setIsLoading(true); 
+  
+        const bitLogixContractAddress = '0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e'; 
+        const bitLogixContract = new ethers.Contract(
+          bitLogixContractAddress,
+          BitLogixABI.abi,
+          provider
+        );
+  
+        const tx = await bitLogixContract.registerEnterprise(
+          fullName,
+          detail,
+          id
+        );
+  
+        await tx.wait(); // Wait for the transaction to be mined
+  
+        setIsLoading(false); // Set loading state to false after the transaction
+  
+        console.log('Registration successful!');
+      } catch (error) {
+        console.error('Error:', error);
+        setIsLoading(false); // Set loading state to false in case of an error
+      }
+    }
 
     const handleSubmit = () => {
         console.log(fullName)
