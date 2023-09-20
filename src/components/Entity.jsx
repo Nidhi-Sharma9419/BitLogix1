@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
-import BitLogixABI from './artifacts/contracts/BitLogix.sol/BitLogix.json';
+import BitLogixABI from '../artifacts/contracts/BitLogix.sol/BitLogix.json';
 import provider from './ethers';
 
 export default function Enterprise() {
@@ -126,7 +126,7 @@ export default function Enterprise() {
                     type="submit"
                     className="w-full block bg-green-500 hover:bg-green-400  text-white font-semibold rounded-lg
                     px-4 py-3 mt-6"
-                    onClick={() => handleSubmit()}
+                    onClick={registerEnterprise}
                   >
                     Create Account
                   </button>
