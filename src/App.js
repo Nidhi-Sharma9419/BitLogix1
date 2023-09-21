@@ -15,6 +15,7 @@ import ProductDetails from './components/ProductDetails';
 import AddDelivery from './components/AddDelivery';
 import SelectRole from "./components/SelectRole";
 import "react-datepicker/dist/react-datepicker.css";
+import Navbar from './components/Navbar';
 
 const injectedConnector = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42, 11155111, 80001],
@@ -28,6 +29,7 @@ function App() {
 
   return (
     <Router>
+      <Navbar/>
 
       <Routes>
         <Route path="/" element={<Home />}></Route>

@@ -5,7 +5,6 @@ export default function Recipient() {
   const [isloading, setIsLoading] = useState(false);
   return (
     <>
-    <Navbar/>
       <div className="flex flex-wrap justify-evenly items-center min-h-[100vh]">
         <img
           src="../recipient-home.avif"

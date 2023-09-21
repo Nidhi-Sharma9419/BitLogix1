@@ -11,7 +11,6 @@ export default function Register() {
   const [type, setType] = useState("");
   return (
     <>
-  <Navbar/>
     <div className="flex justify-center items-center">
       <div className="w-1/2 mt-12  -me-40 hidden lg:block">
         <img src="../reg.png" />
