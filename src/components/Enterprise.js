@@ -15,7 +15,6 @@ export default function Enterprise() {
 
     return (
       <>
-      <Navbar/>
         <div className="flex flex-row-reverse flex-wrap justify-evenly items-center min-h-[100vh]">
           <img
             src="/enterprise.png"

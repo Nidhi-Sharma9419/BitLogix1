@@ -4,7 +4,6 @@ import Navbar from './Navbar';
 export default function Delivery() {
   return (
     <>
-    <Navbar/>
       <div className='flex flex-wrap justify-center lg:justify-evenly items-center lg:min-h-[100vh] min-h-[80vh]'>
         <img src={"/landing.png"} alt='product-img' className='lg:w-[50rem] lg:h-[30rem] w-[10rem] h-[10rem]' />
         <div>
