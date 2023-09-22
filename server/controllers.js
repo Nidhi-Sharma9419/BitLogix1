@@ -1,8 +1,9 @@
 const User = require("./usermodal")
 
 const createuser = async (req,res) => {
-    const {type,name,place,govtid} = req.body;
+    const {address,type,name,place,govtid} = req.body;
     const totald = {
+        address:address,
         type:type,
         name:name,
         place:place,
