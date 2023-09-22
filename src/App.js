@@ -52,18 +52,6 @@ function App() {
       console.error("Failed to connect", error);
     }
   };
-
-
-
-
-
- 
-
-  
-
-
-
-
   return (
     <Router>
       <nav style={{ margin: 10 }}>
