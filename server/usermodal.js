@@ -8,4 +8,4 @@ const UserSchema = new mongoose.Schema({
   govtid:String
 });
 
-module.exports = mongoose.model("recipient", UserSchema);
+module.exports = mongoose.model("user", UserSchema);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useWeb3React } from "@web3-react/core";
 import { BrowserProvider, ethers } from "ethers";
@@ -11,7 +11,8 @@ const chainId = 11155111;
 //const provider = new ethers.BrowserProvider(rpcEndpoint, { chainId });
 
 export default function Enterprise() {
-  const url = "https://bitlogix-backend.onrender.com/api/v1/user";
+  const navigate = useNavigate();
+  const url = process.env.REACT_APP_BACKEND_URL;
   const [isloading, setIsLoading] = useState(false);
 
   const [fullName, setFullName] = useState();
@@ -45,7 +46,7 @@ export default function Enterprise() {
       );
       console.log("it is working!!!!!!!");
       await tx.wait(); // Wait for the transaction to be mined
-      await fetch(`${url}`, {
+      await fetch(`${url}/api/v1/user`, {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -61,6 +62,7 @@ export default function Enterprise() {
           govtid: id,
         }),
       }).then((res) => {
+        navigate("/addproduct")
         // console.log(res);
         setIsLoading(false);
       });

@@ -20,7 +20,7 @@ export default function Home() {
               BitLogiX
             </h1>
             <h3 className="text-xl font-semibold text-center font-mono my-3">
-              Elevate Your Business with Tron/BTTC
+              Elevate Your Business with our DApp
             </h3>
             <span className="text-justify mt-3 font-medium w-[80%] tracking-wide text-lg hidden md:block">
               Experience the synergy of our Tron-based supply chain DApp, where
