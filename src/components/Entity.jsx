@@ -2,9 +2,17 @@ import React,{useState} from 'react'
 import { Link } from 'react-router-dom';
 
 import { useWeb3React } from '@web3-react/core';
-import { ethers } from 'ethers';
+import { BrowserProvider, ethers } from 'ethers';
 import BitLogixABI from '../artifacts/contracts/BitLogix.sol/BitLogix.json';
-import provider from './ethers';
+//import provider from './ethers';
+
+
+
+
+
+const chainId = 11155111;
+
+//const provider = new ethers.BrowserProvider(rpcEndpoint, { chainId });
 
 export default function Enterprise() {
     const [isloading, setIsLoading] = useState(false);
@@ -16,7 +24,7 @@ export default function Enterprise() {
     
   const { account } = useWeb3React();
 
-  
+   
   
  
   
@@ -30,24 +38,30 @@ export default function Enterprise() {
         }
   
         setIsLoading(true); 
+        console.log('it is working');
+        
+
+         
+        
+        const bitLogixContractAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'; 
+        const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
-        const bitLogixContractAddress = '0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e'; 
         const bitLogixContract = new ethers.Contract(
           bitLogixContractAddress,
           BitLogixABI.abi,
           signer
         );
-  
+        console.log('it is working!!!!');
         const tx = await bitLogixContract.registerEnterprise(
           fullName,
           detail,
           id
         );
-  
+        console.log('it is working!!!!!!!');
         await tx.wait(); // Wait for the transaction to be mined
-  
+        
         setIsLoading(false); // Set loading state to false after the transaction
-  
+        
         console.log('Registration successful!');
       } catch (error) {
         console.error('Error:', error);
