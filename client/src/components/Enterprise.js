@@ -11,7 +11,7 @@ const chainId = 11155111;
 //const provider = new ethers.BrowserProvider(rpcEndpoint, { chainId });
 
 export default function Enterprise() {
-  const url = "http://localhost:5000/api/v1/user";
+  const url = "https://bitlogix-backend.onrender.com/api/v1/user";
   const [isloading, setIsLoading] = useState(false);
 
   const [fullName, setFullName] = useState();
