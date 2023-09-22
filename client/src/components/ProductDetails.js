@@ -1,5 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 
 export default function ProductDetails() {
@@ -13,6 +15,11 @@ export default function ProductDetails() {
   const [destinationPlace, setDestinationPlace] = useState();
   const [recipientAddress, setRecipientAddress] = useState();
   const { account } = useWeb3React();
+  const [deliveryDate, setDeliveryDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setDeliveryDate(date);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,18 +34,19 @@ export default function ProductDetails() {
       },
       body: JSON.stringify({
         name: name,
-        price:price,
-        quantity:quantity,
-        pickup:pickupPlace,
-        destination:destinationPlace,
-        recipientaddress:recipientAddress,
-        enterpriseaddress:account,
+        price: price,
+        quantity: quantity,
+        pickup: pickupPlace,
+        destination: destinationPlace,
+        recipientaddress: recipientAddress,
+        enterpriseaddress: account,
+        deliverydate: deliveryDate,
       }),
     }).then((res) => {
-      navigate("/adddelivery")
+      navigate("/products");
       setIsLoading(false);
     });
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   return (
@@ -128,6 +136,18 @@ export default function ProductDetails() {
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setRecipientAddress(e.target.value)}
                   required
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700">Select Delivery Date</label>
+                <DatePicker
+                  selected={deliveryDate}
+                  onChange={handleDateChange}
+                  minDate={new Date()} // Set minimum date as today
+                  dateFormat="dd/MM/yyyy"
+                  className="p-2 rounded-lg border-blue-200 border-2"
+                  required
+                  placeholderText="expected date"
                 />
               </div>
               {isloading ? (

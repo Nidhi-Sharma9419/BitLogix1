@@ -22,7 +22,7 @@ export default function Navbar() {
         .then((data) => {
           if(data.response) {
             if(data.response.type=="enterprise") {
-              navigate("/addproduct")
+              navigate("/products")
             } else {
               navigate("/delivery")
             }

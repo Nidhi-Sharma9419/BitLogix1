@@ -11,6 +11,7 @@ import AddDelivery from './components/AddDelivery';
 import SelectRole from "./components/SelectRole";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from './components/Navbar';
+import EnterpriseProductPage from './components/EnterpriseProductPage';
 
 function App() {
   return (
@@ -21,10 +22,11 @@ function App() {
         <Route path="/select" element={<SelectRole/>}></Route>
         <Route path= "/about" element={<AboutUs />} ></Route>
         <Route path="/recipient" element={<Recipient />} />
-        <Route path='/delivery' element={<Delivery />} />
         <Route path="/enterprise" element={<Enterprise />} />
+        <Route path='/delivery' element={<Delivery />} />
         <Route path="/addproduct" element={<ProductDetails />} />
         <Route path="/adddelivery" element={<AddDelivery />} />
+        <Route path='/products' element={<EnterpriseProductPage />} />
       </Routes>
     </Router>
   );

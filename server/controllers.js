@@ -43,7 +43,7 @@ const createproduct = async (req, res) => {
   }
 };
 
-const getProduct = async (req, res) => {
+const getRecProduct = async (req, res) => {
     try {
       const { address: address } = req.params;
       const response = await Product.find({ recipientaddress: address });
@@ -57,6 +57,23 @@ const getProduct = async (req, res) => {
       res.status(500).json({ msg: error });
     }
   };
+
+
+  const getEntProduct = async (req, res) => {
+    try {
+      const { address: address } = req.params;
+      const response = await Product.find({ enterpriseaddress: address });
+      if (!response) {
+        return res
+          .status(404)
+          .json({ msg: `no products found for address ${address}` });
+      }
+      res.status(200).json({ response });
+    } catch (error) {
+      res.status(500).json({ msg: error });
+    }
+  };
+
 
   const updateProduct = async (req,res) => {
     try {
@@ -77,6 +94,7 @@ module.exports = {
   createuser,
   getUser,
   createproduct,
-  getProduct,
+  getRecProduct,
+  getEntProduct,
   updateProduct,
 };

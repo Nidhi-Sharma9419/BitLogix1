@@ -3,7 +3,6 @@ import Card from "./Card";
 import CardData from "./CardData";
 
 export default function Home() {
-
   return (
     <>
       <div className="flex flex-col flex-wrap bg-gray-200 h-auto">
@@ -16,21 +15,17 @@ export default function Home() {
             />
           </div>
           <div className="flex flex-col items-center md:w-[50%] my-5 md:mt-28">
-            <h1 className=" font-bold font-Pantel text-6xl">
-              BitLogiX
-            </h1>
+            <h1 className=" font-bold font-Pantel text-6xl">BitLogiX</h1>
             <h3 className="text-xl font-semibold text-center font-mono my-3">
               Elevate Your Business with our DApp
             </h3>
             <span className="text-justify mt-3 font-medium w-[80%] tracking-wide text-lg hidden md:block">
-              Experience the synergy of our Tron-based supply chain DApp, where
+              Experience the synergy of our supply chain DApp, where
               blockchain technology converges with efficient supply chain
-              management. Engage with industry experts and collaborative
-              partners in a secure and confidential environment. Uncover
-              transparency through real-time feedback and ratings, empowering
-              informed decisions for your business. Accessible and
-              cost-effective, our DApp revolutionizes supply chain services,
-              removing barriers to streamlined operations.
+              management. Elevate your enterprise to new heights. Our DApp
+              simplifies the complex world of supply chain management.With
+              real-time tracking, instant payments,and token rewards, you'll
+              unlock a world of possibilities. Experience the future now.
             </span>
             <span className="text-left mt-3 font-medium w-[80%] tracking-wide text-lg md:hidden">
               Experience the future with our Tron-powered supply chain DApp.
@@ -67,14 +62,14 @@ export default function Home() {
             WHY <span className="">BitLogiX</span> ?
           </span>
           <div className="flex flex-col md:flex-row flex-wrap justify-center z-10">
-          {CardData.map((card, index) => (
-          <Card
-            key={index}
-            title={card.title}
-            description={card.description}
-            imageUrl={card.imageUrl}
-          />
-        ))}
+            {CardData.map((card, index) => (
+              <Card
+                key={index}
+                title={card.title}
+                description={card.description}
+                imageUrl={card.imageUrl}
+              />
+            ))}
           </div>
         </div>
       </div>
