@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Navbar from './components/Navbar';
 import EnterpriseProductPage from './components/EnterpriseProductPage';
 import ProductCardEnt from './components/ProductCardEnt';
+import Team from './components/Team';
 import RecipientProductPage from './components/RecipientProductPage';
 import ProductCardRec from './components/ProductCardRec';
 
@@ -30,6 +31,7 @@ function App() {
         <Route path='/products' element={<EnterpriseProductPage />} />
         <Route path='/deliveries' element={<RecipientProductPage />} />
         <Route path="/product/:id" element={<ProductCardEnt />} />
+        <Route path="/team" element={<Team />} />
         <Route path="/delivery/:id" element={<ProductCardRec />} />
       </Routes>
     </Router>
