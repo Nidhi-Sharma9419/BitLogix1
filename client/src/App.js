@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Navbar from './components/Navbar';
 import EnterpriseProductPage from './components/EnterpriseProductPage';
 import ProductCardEnt from './components/ProductCardEnt';
+import Team from './components/Team';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/addproduct" element={<ProductDetails />} />
         <Route path='/products' element={<EnterpriseProductPage />} />
         <Route path="/product/:id" element={<ProductCardEnt />} />
+        <Route path="/team" element={<Team />} />
       </Routes>
     </Router>
   );
