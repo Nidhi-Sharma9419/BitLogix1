@@ -1,6 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import EnterpriseNavbar from "./EnterpriseNavbar";
 
 export default function EnterpriseProductPage() {
   const url = process.env.REACT_APP_BACKEND_URL;
@@ -21,6 +22,7 @@ export default function EnterpriseProductPage() {
   }, []);
   return (
     <>
+      <EnterpriseNavbar />
       <div className="flex flex-wrap items-center justify-end px-5 py-5">
         <Link to="/addproduct">
           <button className=" bg-green-400 p-2 px-3 rounded-full">

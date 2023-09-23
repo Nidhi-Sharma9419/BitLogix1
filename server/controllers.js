@@ -73,6 +73,19 @@ const getRecProduct = async (req, res) => {
       res.status(500).json({ msg: error });
     }
   };
+  
+  const getProduct = async (req,res) => {
+    try {
+        const {id:productID} = req.params;
+        const response= await Product.findOne({_id:productID})
+        if(!response) {
+            return res.status(404).json({msg:`no product found with id ${productID}`})
+        }
+        res.status(200).json({response})
+    } catch (error) {
+        res.status(500).json({ msg:error})
+    }
+}
 
 
   const updateProduct = async (req,res) => {
@@ -94,6 +107,7 @@ module.exports = {
   createuser,
   getUser,
   createproduct,
+  getProduct,
   getRecProduct,
   getEntProduct,
   updateProduct,

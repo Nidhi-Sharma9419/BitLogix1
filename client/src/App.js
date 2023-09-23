@@ -7,11 +7,11 @@ import Recipient from './components/Recipient';
 import Delivery from './components/Delivery';
 import Enterprise from './components/Enterprise';
 import ProductDetails from './components/ProductDetails';
-import AddDelivery from './components/AddDelivery';
 import SelectRole from "./components/SelectRole";
 import "react-datepicker/dist/react-datepicker.css";
 import Navbar from './components/Navbar';
 import EnterpriseProductPage from './components/EnterpriseProductPage';
+import ProductCardEnt from './components/ProductCardEnt';
 
 function App() {
   return (
@@ -25,8 +25,8 @@ function App() {
         <Route path="/enterprise" element={<Enterprise />} />
         <Route path='/delivery' element={<Delivery />} />
         <Route path="/addproduct" element={<ProductDetails />} />
-        <Route path="/adddelivery" element={<AddDelivery />} />
         <Route path='/products' element={<EnterpriseProductPage />} />
+        <Route path="/product/:id" element={<ProductCardEnt />} />
       </Routes>
     </Router>
   );
