@@ -28,7 +28,7 @@ export default function Navbar() {
               navigate("/products");
               setType("Enterprise");
             } else {
-              navigate("/delivery");
+              navigate("/deliveries");
               setType("Recipient");
             }
           } else {
@@ -50,7 +50,7 @@ export default function Navbar() {
     }
   };
   const navigation = [
-    { name: "Home", href: "/", current: true },
+    { name: "Home", href: type ? type=="Enterprise"?"/products":"/deliveries":"/", current: true },
     { name: "About", href: "/about", current: false },
   ];
   const disconnectWallet = async () => {
@@ -180,7 +180,7 @@ export default function Navbar() {
                   {item.name}
                 </Disclosure.Button>
               ))}
-              <Disclosure.Button>
+              {/* <Disclosure.Button> */}
                 {/* Connect metamask wallet */}
                 {account ? (
                   <>
@@ -201,7 +201,7 @@ export default function Navbar() {
                     </button>
                   </>
                 )}
-              </Disclosure.Button>
+              {/* </Disclosure.Button> */}
             </div>
           </Disclosure.Panel>
         </>

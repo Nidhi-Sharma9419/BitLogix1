@@ -1,17 +1,16 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import EnterpriseNavbar from "./EnterpriseNavbar";
-import Loader from "./Loader";
-
-export default function EnterpriseProductPage() {
+import RecipientNavbar from "./RecipientNavbar";
+import Loader from "./Loader"
+export default function RecipientProductPage() {
   const url = process.env.REACT_APP_BACKEND_URL;
   const [data, setData] = useState([""]);
   const [isloading, setIsloading] = useState(false);
   const { account } = useWeb3React();
   const fetchdata = () => {
     setIsloading(true);
-    fetch(`${url}/api/v1/enterprise/${account}`)
+    fetch(`${url}/api/v1/recipient/${account}`)
       .then((res) => res.json())
       .then((datas) => {
         setData(datas.response);
@@ -23,17 +22,12 @@ export default function EnterpriseProductPage() {
   }, []);
   return (
     <>
-      <EnterpriseNavbar />
+      <RecipientNavbar />
       <div className="flex flex-wrap items-center justify-end px-5 py-5">
-        <Link to="/addproduct">
-          <button className=" bg-green-400 p-2 px-3 rounded-full">
-            Add product
-          </button>
-        </Link>
       </div>
       <div className="">
         {isloading ? (
-          <div className="min-w-[90rem]">
+          <div className="min-w-[98vw]">
             <Loader />
           </div>
         ) : (
@@ -48,7 +42,7 @@ export default function EnterpriseProductPage() {
                         className="bg-gray-100 hover:bg-gray-200 rounded-lg px-5 py-3 md:w-[96vw] w-[90vw]"
                       >
                         <div className="flex justify-between">
-                          <Link to={`/product/${pro._id}`}>
+                          <Link to={`/delivery/${pro._id}`}>
                             <p className="font-bold text-2xl hover:underline">
                               {pro.name}
                             </p>
@@ -72,18 +66,18 @@ export default function EnterpriseProductPage() {
                             )}
                           </div>
                         </div>
-                        <p>To: {pro.recipientaddress}</p>
+                        <p>From: {pro.enterpriseaddress}</p>
                       </div>
                     );
                   })}
                 </div>
               </>
             ) : (
-              <div className="flex justify-center items-center">
+              <>
                 <h1 className="text-center font-bold">
                   No product deliveries done in the past
                 </h1>
-              </div>
+              </>
             )}
           </>
         )}
