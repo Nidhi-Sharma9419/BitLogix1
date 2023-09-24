@@ -69,7 +69,7 @@ export default function Footer() {
         <div className="flex flex-col md:w-[50%] justify-center font-medium font-Pantel mt-10 md:mt-0 ml-12 md:ml-0 md:pl-16">
           <p className="text-3xl">Visit :</p>
           <span className="mt-7">
-            <a href="" className="hover:text-sky-200 text-2xl">
+            <a href="#" className="hover:text-sky-200 text-2xl">
               TronDAO Submission
             </a>
           </span>

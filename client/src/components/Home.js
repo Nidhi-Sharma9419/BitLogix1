@@ -11,7 +11,7 @@ export default function Home() {
           <div className="md:w-[50%]">
             <img
               src={"/home-1.png"}
-              alt="home-image-1"
+              alt="home"
               className="md:mt-20 md:ml-28 md:w-[60%]"
             />
           </div>
@@ -40,7 +40,7 @@ export default function Home() {
           <div className=" hidden md:block">
             <img
               src={"/btt_logo.webp"}
-              alt="home-image-1"
+              alt="btt"
               className="w-[90%]"
             />
           </div>

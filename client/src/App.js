@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/Home';
 import AboutUs from './AboutUs';
 import Recipient from './components/Recipient';
-import Delivery from './components/Delivery';
 import Enterprise from './components/Enterprise';
 import ProductDetails from './components/ProductDetails';
 import SelectRole from "./components/SelectRole";
@@ -22,16 +21,15 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/select" element={<SelectRole/>}></Route>
         <Route path= "/about" element={<AboutUs />} ></Route>
+        <Route path="/team" element={<Team />} />
+        <Route path="/select" element={<SelectRole/>}></Route>
         <Route path="/recipient" element={<Recipient />} />
         <Route path="/enterprise" element={<Enterprise />} />
-        <Route path='/delivery' element={<Delivery />} />
         <Route path="/addproduct" element={<ProductDetails />} />
         <Route path='/products' element={<EnterpriseProductPage />} />
-        <Route path='/deliveries' element={<RecipientProductPage />} />
         <Route path="/product/:id" element={<ProductCardEnt />} />
-        <Route path="/team" element={<Team />} />
+        <Route path='/deliveries' element={<RecipientProductPage />} />
         <Route path="/delivery/:id" element={<ProductCardRec />} />
       </Routes>
     </Router>
