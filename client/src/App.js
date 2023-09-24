@@ -14,6 +14,8 @@ import ProductCardEnt from './components/ProductCardEnt';
 import Team from './components/Team';
 import RecipientProductPage from './components/RecipientProductPage';
 import ProductCardRec from './components/ProductCardRec';
+import CheckBalanceEnt from './components/CheckBalanceEnt';
+import CheckBalanceRec from './components/CheckBalanceRec';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
         <Route path="/product/:id" element={<ProductCardEnt />} />
         <Route path='/deliveries' element={<RecipientProductPage />} />
         <Route path="/delivery/:id" element={<ProductCardRec />} />
+        <Route path='/checkenterprise' element={<CheckBalanceEnt />} />
+        <Route path='/checkrecipient' element={<CheckBalanceRec />} />
       </Routes>
     </Router>
   );

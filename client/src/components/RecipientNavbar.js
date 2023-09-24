@@ -11,7 +11,9 @@ export default function EnterpriseNavbar() {
           <Link to="/deliveries">
             <button className="hover:underline">Deliveries</button>
           </Link>
-          <button className="hover:underline">Check Balance</button>
+          <Link to="/checkrecipient">
+            <button className="hover:underline">Check Balance</button>
+          </Link>
         </div>
       </div>
     </>
