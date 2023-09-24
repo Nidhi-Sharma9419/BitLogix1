@@ -74,8 +74,7 @@ export default function Team() {
                   <h5 className="mb-4 text-lg font-bold">{member.name}</h5>
                   <p className="mb-6">{member.role}</p>
                   <ul className="mx-auto flex list-inside justify-center">
-                    <a href="#!" className="px-2"></a>
-                    <a href={member.twitterLink} target="_blank" className="px-2">
+                    <a href={member.twitterLink} target="_blank" rel="noreferrer" className="px-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -87,7 +86,7 @@ export default function Team() {
                       />
                     </svg>
                     </a>
-                    <a href={member.linkedinLink} target="_blank" className="px-2">
+                    <a href={member.linkedinLink} target="_blank" rel="noreferrer" className="px-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -99,7 +98,7 @@ export default function Team() {
                       />
                     </svg>
                     </a>
-                    <a href={member.githubLink} target="_blank" className="px-2 -mt-1">
+                    <a href={member.githubLink} target="_blank" rel="noreferrer" className="px-2 -mt-1">
                        <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"

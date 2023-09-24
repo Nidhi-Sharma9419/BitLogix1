@@ -23,7 +23,8 @@ export default function ProductCardRec() {
   var din = new Date();
   var dout = new Date(data.deliverydate);
   var noday = (dout.getTime() - din.getTime()) / (1000 * 3600 * 24);
-  const handleconfirm = async (e) => {
+  // var noday = 0
+  const handlestatus = async (e) => {
     e.preventDefault();
     fetch(`${url}/api/v1/product/${id}`, {
       method: "PUT",
@@ -33,8 +34,8 @@ export default function ProductCardRec() {
       }),
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then((datas) => {
+        setData(datas.response);
       });
   };
   return (
@@ -46,11 +47,11 @@ export default function ProductCardRec() {
         </>
       ) : (
         <>
-          <div className="my-5 flex flex-wrap justify-center lg:justify-evenly items-center lg:min-h-[100vh] min-h-[80vh]">
+          <div className="my- flex flex-wrap justify-center lg:justify-evenl items-center lg:min-h-[90vh] min-h-[80vh]">
             <img
               src={"/landing.png"}
               alt="product-img"
-              className="lg:w-[50rem] lg:h-[30rem] w-[10rem] h-[10rem]"
+              className="lg:w-[40rem] lg:h-[30rem] w-[15rem] h-[15rem]"
             />
             {data.delivered ? (
               <>
@@ -131,10 +132,36 @@ export default function ProductCardRec() {
                         <button className="cursor-default p-2 bg-indigo-500 rounded-lg text-white text-2xl font-bold">
                           In-Transit
                         </button>
-                        <p className="font-semibold text-2xl">
-                          Your product will be delivered in {Math.round(noday)}{" "}
-                          days
-                        </p>
+                        {Math.round(noday) > 0 ? (
+                          <>
+                            <p className="font-semibold text-2xl">
+                              Your product will be delivered in{" "}
+                              {Math.round(noday)} days
+                            </p>
+                            <p className="font-semibold text-md">
+                              Recieved the product?{" "}
+                              <span
+                                className="font-bold hover:underline cursor-pointer"
+                                onClick={handlestatus}
+                              >
+                                click here to change the product delivery status
+                              </span>
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p className="font-semibold text-md text-justify">
+                              The time set by enterprise has lapsed,{" "}
+                              <span
+                                className="font-bold hover:underline cursor-pointer"
+                                onClick={handlestatus}
+                              >
+                                click here to change the product delivery status
+                              </span>{" "}
+                              if you recieve the product.
+                            </p>
+                          </>
+                        )}
                       </>
                     )}
                   </div>

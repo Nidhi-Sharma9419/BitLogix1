@@ -17,6 +17,20 @@ export default function ProductCardEnt() {
         setIsloading(false);
       });
   };
+  const handlestatus = async (e) => {
+    e.preventDefault();
+    fetch(`${url}/api/v1/product/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        delivered: true,
+      }),
+    })
+      .then((response) => response.json())
+      .then((datas) => {
+        setData(datas.response);
+      });
+  };
   useEffect(() => {
     fetchdata();
   }, []);
@@ -25,18 +39,18 @@ export default function ProductCardEnt() {
   var noday = (dout.getTime() - din.getTime()) / (1000 * 3600 * 24);
   return (
     <>
-    <EnterpriseNavbar />
+      <EnterpriseNavbar />
       {isloading ? (
         <>
           <Loader />
         </>
       ) : (
         <>
-          <div className="my-5 flex flex-wrap justify-center lg:justify-evenly items-center lg:min-h-[100vh] min-h-[80vh]">
+          <div className="my-5 flex flex-wrap justify-center lg:justify-evenly items-center lg:min-h-[90vh] min-h-[80vh]">
             <img
               src={"/landing.png"}
               alt="product-img"
-              className="lg:w-[50rem] lg:h-[30rem] w-[10rem] h-[10rem]"
+              className="lg:w-[40rem] lg:h-[30rem] w-[15rem] h-[15rem]"
             />
             <div>
               <p className="text-2xl my-3 ">
@@ -78,9 +92,39 @@ export default function ProductCardEnt() {
                     <button className="cursor-default p-2 bg-indigo-500 rounded-lg text-white text-2xl font-bold">
                       In-Transit
                     </button>
-                    <p className="font-semibold text-2xl">
+                    {/* <p className="font-semibold text-2xl">
                       Your product will be delivered in {Math.round(noday)} days
-                    </p>
+                    </p> */}
+                    {Math.round(noday) > 0 ? (
+                      <>
+                        <p className="font-semibold text-2xl">
+                          Your product will be delivered in {Math.round(noday)}{" "}
+                          days
+                        </p>
+                        <p className="font-semibold text-md">
+                          Product delivered?{" "}
+                          <span
+                            className="font-bold hover:underline cursor-pointer"
+                            onClick={handlestatus}
+                          >
+                            click here to change the product delivery status
+                          </span>
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="font-semibold text-md text-justify">
+                          The time set by you has lapsed,{" "}
+                          <span
+                            className="font-bold hover:underline cursor-pointer"
+                            onClick={handlestatus}
+                          >
+                            click here to change the product delivery status
+                          </span>{" "}
+                          if the product is delivered.
+                        </p>
+                      </>
+                    )}
                   </>
                 )}
               </div>
