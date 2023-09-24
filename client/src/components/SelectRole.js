@@ -13,12 +13,12 @@ export default function Register() {
           </div>
           <div className="flex justify-between gap-5 mt-5">
             <Link to="/enterprise">
-              <button className="bg-green-400 text-gr font-bold outline outline-green-600 outline outline-offset-2 outline-green-500 outline-1 hover:outline-2 hover:bg-green-200">
+              <button className="rounded-full p-3 w-32 outline outline-offset-2 outline-green-500 outline-1 hover:outline-2 hover:bg-green-200">
                 Enterprise
               </button>
             </Link>
             <Link to="/recipient">
-              <button className="bg-green-400 text-gr font-bold outline outline-green-600 outline outline-offset-2 outline-green-500 outline-1 hover:outline-2 hover:bg-green-200">
+              <button className="rounded-full p-3 w-32 outline outline-offset-2 outline-green-500 outline-1 hover:outline-2 hover:bg-green-200">
                 Recipient
               </button>
             </Link>
