@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useWeb3React } from "@web3-react/core";
 import { BrowserProvider, ethers } from "ethers";
-import BitLogixABI from "../artifacts/contracts/Bitlogix.json";
+import BitLogixABI from "../artifacts/contracts/BitLogix.sol/BitLogix.json";
 //import provider from './ethers';
 
 const chainId = 11155111;
@@ -30,7 +30,7 @@ export default function Enterprise() {
       console.log("it is working");
 
       const bitLogixContractAddress =
-        "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+        "0x5FbDB2315678afecb367f032d93F642f64180aa3";
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       const bitLogixContract = new ethers.Contract(
