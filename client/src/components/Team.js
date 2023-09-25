@@ -29,7 +29,7 @@ const teamData = [
   {
     name: "Nidhi Sharma",
     role: "Smart Contract Developer and integration",
-    imageSrc: "/nidhi.PNG",
+    imageSrc: "/Nidhi.png",
     twitterLink: "https://twitter.com/learnBigO",
     linkedinLink: "https://www.linkedin.com/in/nidhi-sharma-228aa319b/",
     githubLink: "https://github.com/Nidhi-Sharma9419",
