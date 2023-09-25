@@ -13,7 +13,7 @@ const teamData = [
   {
     name: "Hemanth Bugata",
     role: "Smart Contract Developer",
-    imageSrc: "/hemanth.png",
+    imageSrc: "/hemanth.PNG",
     twitterLink: "https://twitter.com/HemanthBugata",
     linkedinLink: "https://www.linkedin.com/in/hemanth-bugata",
     githubLink: "https://github.com/HemanthBugata",
@@ -21,7 +21,7 @@ const teamData = [
   {
     name: "Suraj Thammi",
     role: "Full Stack Developer",
-    imageSrc: "/suraj.png",
+    imageSrc: "/suraj.PNG",
     twitterLink: "https://twitter.com/The__Good__Guy",
     linkedinLink: "https://www.linkedin.com/in/surajthammi/",
     githubLink: "https://github.com/suraj719",
@@ -29,7 +29,7 @@ const teamData = [
   {
     name: "Nidhi Sharma",
     role: "Smart Contract Developer and integration",
-    imageSrc: "/nidhi.png",
+    imageSrc: "/nidhi.PNG",
     twitterLink: "https://twitter.com/learnBigO",
     linkedinLink: "https://www.linkedin.com/in/nidhi-sharma-228aa319b/",
     githubLink: "https://github.com/Nidhi-Sharma9419",
@@ -37,7 +37,7 @@ const teamData = [
   {
     name: "Kushal Sapra",
     role: "Smart Contract Developer",
-    imageSrc: "/kushal.png",
+    imageSrc: "/kushal.PNG",
     twitterLink: "https://twitter.com/kushalsapra07",
     linkedinLink: "https://www.linkedin.com/in/",
     githubLink: "https://github.com/K1297",
