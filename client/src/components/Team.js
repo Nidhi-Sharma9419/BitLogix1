@@ -22,7 +22,7 @@ const teamData = [
     name: "Suraj Thammi",
     role: "Full Stack Developer",
     imageSrc: "/suraj.PNG",
-    twitterLink: "https://twitter.com/The__Good__Guy",
+    twitterLink: "https://twitter.com/0xsuraj719",
     linkedinLink: "https://www.linkedin.com/in/surajthammi/",
     githubLink: "https://github.com/suraj719",
   },
@@ -47,9 +47,9 @@ const teamData = [
 
 export default function Team() {
   return (
-    <div className="bg-gray-200 h-[140em] md:h-[90em] lg:h-[75em]">
-      <section className="mb-32 text-center">
-        <h2 className="mb-32 text-3xl font-bold">
+    <div className="bg-gray-200 h-auto">
+      <section className="text-center">
+        <h2 className="py-20 text-3xl font-bold">
           Meet the <u className="text-primary dark:text-primary-400">team</u>
         </h2>
 
