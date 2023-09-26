@@ -42,7 +42,6 @@ const teamData = [
     linkedinLink: "https://www.linkedin.com/in/",
     githubLink: "https://github.com/K1297",
   },
-  // Add more team members here
 ];
 
 export default function Team() {
