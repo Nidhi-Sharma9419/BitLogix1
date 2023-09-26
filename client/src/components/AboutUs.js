@@ -41,7 +41,7 @@ export default function AboutUs() {
           />
         </div>
         <div className="flex flex-row flex-wrap mt-24 border-2 border-[#006B75] rounded-3xl lg:mx-4 lg:py-4 md:justify-center">
-          <img src={"./team.PNG"} alt="vision" className="lg:w-[20%] w-[90%] block text-center md:w-[50%]" />
+          <img src={"./team.png"} alt="vision" className="lg:w-[20%] w-[90%] block text-center md:w-[50%]" />
           <span className="px-8 text-center block text-[#5bd3e6] text-xl font-semibold lg:self-center lg:w-[80%]">
             Behind BitLogix is a diverse team of professionals with expertise in
             blockchain technology, logistics, and user experience design. We are
@@ -60,7 +60,7 @@ export default function AboutUs() {
             ecosystem.
           </span>
           <img
-            src={"./join.PNG"}
+            src={"./join.png"}
             alt="join us"
             className="lg:w-[20%] w-[90%] block text-center md:w-[50%]"
           />
