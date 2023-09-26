@@ -12,21 +12,21 @@ export default function AboutUs() {
           passionate team of blockchain enthusiasts dedicated to reshaping the
           future of supply chain management.
         </span>
-        <div className="flex flex-row flex-wrap mt-24 border-2 border-[#006B75] rounded-3xl lg:mx-4 lg:py-4 md:justify-center">
+        <div className="flex flex-row flex-wrap mt-24 border-2 border-[#006B75] rounded-3xl lg:mx-4 lg:py-4 md:justify-center py-5 md:py-4">
           <img
             src={"./vision.png"}
             alt="vision"
             className="lg:w-[20%] w-[90%] block text-center md:w-[50%]"
           />
-          <span className="px-8 text-center block lg:self-center text-[#5bd3e6] text-xl font-semibold lg:w-[80%] ">
+          <span className="px-8 text-center block lg:self-center text-[#256670] text-xl font-semibold lg:w-[80%] ">
             At Bitlogix, we envision a world where supply chains are
             transparent, efficient, and secure. We believe that blockchain
             technology can revolutionize the way businesses manage their
             logistics, making operations smoother and more trustworthy.
           </span>
         </div>
-        <div className="flex md:flex-row flex-wrap flex-col-reverse mt-24 border-2 border-[#006B75] rounded-3xl lg:mx-4 lg:py-4 md:justify-center">
-          <span className="px-8 text-center block text-[#5bd3e6] text-xl font-semibold lg:self-center lg:w-[80%]">
+        <div className="flex md:flex-row flex-wrap flex-col-reverse mt-24 border-2 border-[#006B75] rounded-3xl lg:mx-4 lg:py-4 md:justify-center py-5 md:py-4">
+          <span className="px-8 text-center block text-[#256670] text-xl font-semibold lg:self-center lg:w-[80%]">
             Our mission is to provide enterprises and recipients with a
             cutting-edge decentralized application (DApp) that simplifies
             logistics, enhances transparency, and ensures secure transactions.
@@ -40,9 +40,9 @@ export default function AboutUs() {
             className="lg:w-[20%] w-[90%] block text-center md:w-[50%]"
           />
         </div>
-        <div className="flex flex-row flex-wrap mt-24 border-2 border-[#006B75] rounded-3xl lg:mx-4 lg:py-4 md:justify-center">
+        <div className="flex flex-row flex-wrap mt-24 border-2 border-[#006B75] rounded-3xl lg:mx-4 lg:py-4 md:justify-center py-5 md:py-4">
           <img src={"./team.png"} alt="vision" className="lg:w-[20%] w-[90%] block text-center md:w-[50%]" />
-          <span className="px-8 text-center block text-[#5bd3e6] text-xl font-semibold lg:self-center lg:w-[80%]">
+          <span className="px-8 text-center block text-[#256670] text-xl font-semibold lg:self-center lg:w-[80%]">
             Behind BitLogix is a diverse team of professionals with expertise in
             blockchain technology, logistics, and user experience design. We are
             dedicated to creating a solution that empowers businesses and
@@ -50,8 +50,8 @@ export default function AboutUs() {
             with confidence.
           </span>
         </div>
-        <div className="flex md:flex-row flex-wrap flex-col-reverse mt-24 border-2 border-[#006B75] rounded-3xl lg:mx-4 lg:py-4 md:justify-center">
-          <span className="px-8 text-center block text-[#5bd3e6] text-xl font-semibold lg:self-center lg:w-[80%]">
+        <div className="flex md:flex-row flex-wrap flex-col-reverse mt-24 border-2 border-[#006B75] rounded-3xl lg:mx-4 lg:py-4 md:justify-center py-5 md:py-4">
+          <span className="px-8 text-center block text-[#256670] text-xl font-semibold lg:self-center lg:w-[80%]">
             Our mission is to provide enterprises and recipients with a
             cutting-edge decentralized application (DApp) that simplifies
             logistics, enhances transparency, and ensures secure transactions.
