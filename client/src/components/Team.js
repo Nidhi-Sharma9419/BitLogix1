@@ -1,3 +1,4 @@
+import { display } from "@mui/system";
 import React from "react";
 
 const teamData = [
@@ -12,7 +13,7 @@ const teamData = [
   {
     name: "Hemanth Bugata",
     role: "Smart Contract Developer",
-    imageSrc: "/hemanth.jpg",
+    imageSrc: "/hemanth.PNG",
     twitterLink: "https://twitter.com/HemanthBugata",
     linkedinLink: "https://www.linkedin.com/in/hemanth-bugata",
     githubLink: "https://github.com/HemanthBugata",
@@ -20,45 +21,42 @@ const teamData = [
   {
     name: "Suraj Thammi",
     role: "Full Stack Developer",
-    imageSrc: "/hardik.jpg",
-    twitterLink: "https://twitter.com/The__Good__Guy",
-    linkedinLink: "https://www.linkedin.com/in/hardik-malani-cybersecurity/",
-    githubLink: "https://github.com/hardik-malani",
-  },
-  {
-    name: "Kushal Sapra",
-    role: "Smart Contract Developer",
-    imageSrc: "/hardik.jpg",
-    twitterLink: "https://twitter.com/The__Good__Guy",
-    linkedinLink: "https://www.linkedin.com/in/hardik-malani-cybersecurity/",
-    githubLink: "https://github.com/hardik-malani",
+    imageSrc: "/suraj.PNG",
+    twitterLink: "https://twitter.com/0xsuraj719",
+    linkedinLink: "https://www.linkedin.com/in/surajthammi/",
+    githubLink: "https://github.com/suraj719",
   },
   {
     name: "Nidhi Sharma",
     role: "Smart Contract Developer and integration",
-    imageSrc: "/hardik.jpg",
-    twitterLink: "https://twitter.com/The__Good__Guy",
-    linkedinLink: "https://www.linkedin.com/in/hardik-malani-cybersecurity/",
-    githubLink: "https://github.com/hardik-malani",
+    imageSrc: "/Nidhi.png",
+    twitterLink: "https://twitter.com/learnBigO",
+    linkedinLink: "https://www.linkedin.com/in/nidhi-sharma-228aa319b/",
+    githubLink: "https://github.com/Nidhi-Sharma9419",
   },
-  // Add more team members here
+  {
+    name: "Kushal Sapra",
+    role: "Smart Contract Developer",
+    imageSrc: "/kushal.PNG",
+    twitterLink: "https://twitter.com/kushalsapra07",
+    linkedinLink: "https://www.linkedin.com/in/",
+    githubLink: "https://github.com/K1297",
+  },
 ];
 
 export default function Team() {
   return (
-    <div className="bg-gray-200 h-[120em] md:h-[70em] lg:h-[55em]">
-      <section className="mb-32 text-center">
-        <h2 className="mb-32 text-3xl font-bold">
+    <div className="bg-gray-200 h-auto">
+      <section className="text-center">
+        <h2 className="py-20 text-3xl font-bold">
           Meet the <u className="text-primary dark:text-primary-400">team</u>
         </h2>
 
-        <div className="flex justify-center flex-wrap lg:space-x-24 md:space-x-5">
+        <div className="flex justify-around lg:justify-center flex-wrap lg:space-x-24 md:px-5">
           {teamData.map((member, index) => (
             <div
             key={index}
-            className={`mb-24 md:mb-0 w-80 ${
-              index > 2 && "md:mt-20"
-            }`}
+            className="mb-24 md:mb-0 w-80 my-20"
           >
               <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:shadow-xl">
                 <div className="flex justify-center">
@@ -90,7 +88,7 @@ export default function Team() {
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
-                      className="h-3.5 w-3.5 text-primary dark:text-primary-400"
+                      className={`h-3.5 w-3.5 text-primary dark:text-primary-400 ${ index == 4 && "hidden" }`}
                     >
                       <path
                         fill="currentColor"

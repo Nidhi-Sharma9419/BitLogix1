@@ -6,7 +6,7 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 // import { useWeb3Context } from ''
 const injectedConnector = new InjectedConnector({
-  supportedChainIds: [1, 3, 4, 5, 42, 11155111, 80001],
+  supportedChainIds: [1, 3, 4, 5, 42, 11155111, 80001, 199],
 });
 const ContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 export default function Navbar() {

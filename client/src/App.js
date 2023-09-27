@@ -2,7 +2,7 @@ import './App.css';
 import  React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; // Make sure to import Switch
 import Home from './components/Home';
-import AboutUs from './AboutUs';
+import AboutUs from './components/AboutUs';
 import Recipient from './components/Recipient';
 import Enterprise from './components/Enterprise';
 import ProductDetails from './components/ProductDetails';
