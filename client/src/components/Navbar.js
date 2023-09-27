@@ -16,7 +16,7 @@ export default function Navbar() {
   const [address, setAddress] = useState("");
   const { activate, active, account } = useWeb3React();
   const [type, setType] = useState("");
-  const [isloading, setIsloading] = useState(true);
+  const [isloading, setIsloading] = useState(false);
   useEffect(() => {
     if (account) {
       console.log("Account", account);
