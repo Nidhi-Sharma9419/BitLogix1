@@ -34,6 +34,21 @@ const getUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req,res) => {
+  try {
+      const {address:useraddress} = req.params
+      const response = await User.findOneAndUpdate({address:useraddress},req.body, {
+          new:true,
+      })
+      if(!response) {
+          return res.status(404).json({msg:`no user found with id ${useraddress}`})
+      }
+      res.status(200).json({response})
+  } catch (error) {
+      res.status(500).json({ msg:error})
+  }
+}
+
 const createproduct = async (req, res) => {
   try {
     const response = await Product.create(req.body);
@@ -106,6 +121,7 @@ const getRecProduct = async (req, res) => {
 module.exports = {
   createuser,
   getUser,
+  updateUser,
   createproduct,
   getProduct,
   getRecProduct,
