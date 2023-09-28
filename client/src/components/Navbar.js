@@ -16,14 +16,17 @@ export default function Navbar() {
   const [address, setAddress] = useState("");
   const { activate, active, account } = useWeb3React();
   const [type, setType] = useState("");
+  const [isloading, setIsloading] = useState(false);
   useEffect(() => {
     if (account) {
       console.log("Account", account);
       setAddress(account);
+      setIsloading(true);
       fetch(`${url}/api/v1/user/${account}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.response) {
+            setIsloading(false);
             if (data.response.type == "enterprise") {
               navigate("/products");
               setType("Enterprise");
@@ -32,6 +35,7 @@ export default function Navbar() {
               setType("Recipient");
             }
           } else {
+            setIsloading(false);
             navigate("/select");
           }
         });
@@ -41,6 +45,7 @@ export default function Navbar() {
   const connectWallet = async () => {
     console.log("Connecing to wallet...");
     try {
+      setIsloading(true);
       await activate(injectedConnector);
       console.log("wallet connected");
       console.log("Account", account);
@@ -48,9 +53,14 @@ export default function Navbar() {
     } catch (error) {
       console.error("Failed to connect", error);
     }
+    setIsloading(false);
   };
   const navigation = [
-    { name: "Home", href: type ? type=="Enterprise"?"/products":"/deliveries":"/", current: true },
+    {
+      name: "Home",
+      href: type ? (type == "Enterprise" ? "/products" : "/deliveries") : "/",
+      current: true,
+    },
     { name: "About", href: "/about", current: false },
   ];
   const disconnectWallet = async () => {
@@ -103,23 +113,33 @@ export default function Navbar() {
                       </Link>
                     ))}
                     {/* Connect metamask wallet */}
-                    {account ? (
+                    {isloading ? (
                       <>
-                        <button
-                          onClick={disconnectWallet}
-                          className="font-bold border-2  border-none px-3 py-1 rounded-full  bg-gray-400 hover:bg-gray-500"
-                        >
-                          Disconnect Wallet
+                        <button className="cursor-progress font-bold border-2  border-none px-3 py-1 rounded-full  bg-gray-400 hover:bg-gray-500">
+                          Connecting to Wallet
                         </button>
                       </>
                     ) : (
                       <>
-                        <button
-                          onClick={connectWallet}
-                          className="font-bold border-2 bg-green-400 border-none hover:bg-green-500 px-3 py-1 rounded-full  "
-                        >
-                          Connect Wallet
-                        </button>
+                        {account ? (
+                          <>
+                            <button
+                              onClick={disconnectWallet}
+                              className="font-bold border-2  border-none px-3 py-1 rounded-full  bg-gray-400 hover:bg-gray-500"
+                            >
+                              Disconnect Wallet
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              onClick={connectWallet}
+                              className="font-bold border-2 bg-green-400 border-none hover:bg-green-500 px-3 py-1 rounded-full  "
+                            >
+                              Connect Wallet
+                            </button>
+                          </>
+                        )}
                       </>
                     )}
                   </div>
@@ -142,26 +162,26 @@ export default function Navbar() {
                 </Disclosure.Button>
               ))}
               {/* <Disclosure.Button> */}
-                {/* Connect metamask wallet */}
-                {account ? (
-                  <>
-                    <button
-                      onClick={disconnectWallet}
-                      className="font-bold border-2  border-none px-3 py-1 rounded-full  bg-gray-400 hover:bg-gray-500"
-                    >
-                      Disconnect Wallet
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      onClick={connectWallet}
-                      className="font-bold border-2 bg-green-400 border-none hover:bg-green-500 px-3 py-1 rounded-full  "
-                    >
-                      Connect Wallet
-                    </button>
-                  </>
-                )}
+              {/* Connect metamask wallet */}
+              {account ? (
+                <>
+                  <button
+                    onClick={disconnectWallet}
+                    className="font-bold border-2  border-none px-3 py-1 rounded-full  bg-gray-400 hover:bg-gray-500"
+                  >
+                    Disconnect Wallet
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={connectWallet}
+                    className="font-bold border-2 bg-green-400 border-none hover:bg-green-500 px-3 py-1 rounded-full  "
+                  >
+                    Connect Wallet
+                  </button>
+                </>
+              )}
               {/* </Disclosure.Button> */}
             </div>
           </Disclosure.Panel>

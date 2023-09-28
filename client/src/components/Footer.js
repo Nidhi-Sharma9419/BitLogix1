@@ -41,10 +41,10 @@ export default function Footer() {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-mail"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="feather feather-mail"
                 >
                   <path d="M22 6L12 13 2 6"></path>
                   <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>

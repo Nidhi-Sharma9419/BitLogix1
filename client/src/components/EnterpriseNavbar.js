@@ -14,6 +14,9 @@ export default function EnterpriseNavbar() {
           <Link to="/checkenterprise">
             <button className="hover:underline">Check Balance</button>
           </Link>
+          <Link to="/qualityenterprise">
+            <button className="hover:underline">Quality Assurance</button>
+          </Link>
         </div>
       </div>
     </>
