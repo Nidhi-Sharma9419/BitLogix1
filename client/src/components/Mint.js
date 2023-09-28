@@ -42,7 +42,7 @@ export default function Mint() {
         </span>
       </h1>
 
-      <div className="border-2 border-pink-400 rounded-lg p-2 mt-5 w-[80%] md:w-auto">
+      <div className="border-2 border-pink-400 rounded-lg p-2 mt-5 w-[80%] md:w-auto z-20">
         <div className="max-w-xs md:max-w-fit mx-auto">
           <span className="block text-center text-2xl">
             Recipient <u>Address</u>
