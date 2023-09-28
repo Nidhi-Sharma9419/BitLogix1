@@ -17,6 +17,7 @@ import ProductCardRec from './components/ProductCardRec';
 import CheckBalanceEnt from './components/CheckBalanceEnt';
 import CheckBalanceRec from './components/CheckBalanceRec';
 import QualityEnt from './components/QualityEnt';
+import Mint from './components/Mint';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path='/checkenterprise' element={<CheckBalanceEnt />} />
         <Route path='/checkrecipient' element={<CheckBalanceRec />} />
         <Route path='/qualityenterprise' element={<QualityEnt />} />
+        <Route path='/mint' element={<Mint />} />
       </Routes>
     </Router>
   );
