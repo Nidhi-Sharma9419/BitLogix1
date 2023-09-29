@@ -18,6 +18,9 @@ import CheckBalanceEnt from './components/CheckBalanceEnt';
 import CheckBalanceRec from './components/CheckBalanceRec';
 import QualityEnt from './components/QualityEnt';
 import Mint from './components/Mint';
+import EnterpriseClaim from './components/EnterPriseClaim';
+import RecipientClaim from './components/RecipientClaim';
+
 
 function App() {
   return (
@@ -39,6 +42,8 @@ function App() {
         <Route path='/checkrecipient' element={<CheckBalanceRec />} />
         <Route path='/qualityenterprise' element={<QualityEnt />} />
         <Route path='/mint' element={<Mint />} />
+        <Route path='/claiment' element={<EnterpriseClaim />} />
+        <Route path='/claimrec' element={<RecipientClaim />} />
       </Routes>
     </Router>
   );
