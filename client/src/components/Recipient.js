@@ -1,38 +1,73 @@
 import React, { useState } from "react";
+import { useWeb3React } from "@web3-react/core";
+import {ethers} from "ethers";
+import BitLogixABI from "../artifacts/contracts/BitLogix.sol/BitLogix.json";
 
 export default function Recipient() {
   const [isloading, setIsLoading] = useState(false);
   const url = "http://localhost:5000/api/v1/user"
+/*
     const [formd,setFormd] = useState({
       type:"recipient",
       name:"",
       place:"",
       govtid:"",
-    })
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setIsLoading(true);
-      await fetch(`${url}`, {
-        method: "POST",
-        crossDomain: true,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify(formd),
-      }).then((res) => {
-        console.log(res);
+    })*/
+    const [fullName, setFullName] = useState();
+  const [detail, setDetails] = useState();
+  const [id, setID] = useState();
+  const { account } = useWeb3React();
+    async function registerRecipient(){
+      try{
+        if(!account){
+          console.error("No connected Ethereum account");
+          return;
+        }
+        setIsLoading(true);
+        const bitLogixContractAddress="0x5FbDB2315678afecb367f032d93F642f64180aa3";
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        const bitLogixContract = new ethers.Contract(
+          bitLogixContractAddress,
+          BitLogixABI.abi,
+          signer
+        );
+        const tx = await bitLogixContract.registerRecipient(
+          fullName,
+          detail,
+          id
+        );
+        await tx.wait();
+        await fetch(`${url}`, {
+          method: "POST",
+          crossDomain: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            type:"recipient",
+            name: fullName,
+            place: detail,
+            govtid: id,
+          }),
+        }).then((res) => {
+          console.log(res);
+          setIsLoading(false);
+          // navigate("/success")
+        });
         setIsLoading(false);
-        // navigate("/success")
-      });
+        console.log("Registration Successful");
+
+      }catch(error){
+        console.error("Error:", error);
+      setIsLoading(false);
+      }
     }
-    const handleform = (e) => {
-      setFormd({
-        ...formd,
-        [e.target.name] : e.target.value,
-      });
-    };
+
+    
+    
   return (
     <>
       <div className="flex flex-wrap justify-evenly items-center min-h-[100vh]">
@@ -46,16 +81,17 @@ export default function Recipient() {
           style={{ width: "30rem" }}
         >
           <div className="w-full h-100">
-            <form onSubmit={handleSubmit}>
+            
             <div>
               <span className="relative mt-6 md:mt-0 bottom-5 lg:bottom-20 font-Pantel text-4xl text-indigo-500 tracking-wider font-medium underline block text-center">RECIPIENT</span>
               <label className="block text-gray-700">Full Name</label>
               <input
                 type="text"
                 name="name"
+                id =""
                 placeholder="Enter Full Name"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-                onChange={handleform}
+                onChange={(e)=> setFullName(e.target.value)}
                 required
               />
             </div>
@@ -64,9 +100,10 @@ export default function Recipient() {
               <input
                 type="text"
                 name="place"
+                id =""
                 placeholder="Enter the place of your business"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-                onChange={handleform}
+                onChange={(e)=> setDetails(e.target.value)}
                 required
               />
             </div>
@@ -75,9 +112,10 @@ export default function Recipient() {
               <input
                 type="text"
                 name="govtid"
+                id = ""
                 placeholder="Enter Govt Authorized ID number"
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-                onChange={handleform}
+                onChange={(e)=> setID(e.target.value)}
                 required
               />
             </div>
@@ -97,12 +135,13 @@ export default function Recipient() {
                   // type="submit"
                   className="w-full block bg-indigo-500 hover:bg-indigo-400  text-white font-semibold rounded-lg
                   px-4 py-3 mt-6"
+                  onClick={registerRecipient}
                 >
                   Create Account
                 </button>
               </>
             )}
-            </form>
+            
           </div>
         </div>
       </div>
