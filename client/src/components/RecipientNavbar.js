@@ -7,7 +7,9 @@ export default function EnterpriseNavbar() {
       <div>
         <div className="flex items-center justify-center gap-5 md:text-2xl font-bold">
           <button className="hover:underline">Account</button>
-          <button className="hover:underline">Claim</button>
+          <Link to="/claim">
+            <button className="hover:underline">Claim</button>
+          </Link>
           <Link to="/deliveries">
             <button className="hover:underline">Deliveries</button>
           </Link>
