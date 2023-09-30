@@ -12,6 +12,7 @@ export default function EnterpriseClaim() {
   const [isClaimed, setIsClaimed] = useState(false);
   const [claimedAmount, setClaimedAmount] = useState(0); // To store the claimed amount from the contract
   const {account} = useWeb3React();
+  const [add, setAdd] = useState("");
 
   
 
@@ -23,7 +24,7 @@ export default function EnterpriseClaim() {
           const providerInstance = new ethers.BrowserProvider(window.ethereum);
           setProvider(providerInstance);
 
-          // Initialize the contract
+        
           const signer = await providerInstance.getSigner();
           const contractInstance = new ethers.Contract(contractAddress, BitLogixABI.abi, signer);
           setContract(contractInstance);
@@ -36,20 +37,20 @@ export default function EnterpriseClaim() {
     initEthers();
   }, []);
 
-  // Function to claim tokens from the smart contract
+  
   const handleClaim = async () => {
     if (contract && provider) {
       try {
         const signer = provider.getSigner();
-        const senderAddress = await signer.getAddress();
+        const senderAddress = await signer.FundMe.address;
 
-        // Call the claimTokens function in the smart contract
+        
         await contract.claimTokens({ gasLimit: 200000, gasPrice: ethers.parseUnits('20', 'gwei') });
 
-        // Get the claimed token amount from the contract
+        
         const claimedTokenAmount = await contract.balanceOf(senderAddress); // Replace with the actual contract method for checking the balance
 
-        // Update the claimed state and amount
+        
         setClaimedAmount(claimedTokenAmount.toString());
         console.log("tell me");
         setIsClaimed(true);
