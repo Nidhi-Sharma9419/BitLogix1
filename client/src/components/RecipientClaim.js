@@ -41,7 +41,7 @@ export default function EnterpriseClaim() {
     if (contract && provider) {
       try {
         const signer = provider.getSigner();
-        const senderAddress = await signer.getAddress();
+        const senderAddress = await signer.FundMe.address;
 
         // Call the claimTokens function in the smart contract
         await contract.claimTokens({ gasLimit: 200000, gasPrice: ethers.parseUnits('20', 'gwei') });
