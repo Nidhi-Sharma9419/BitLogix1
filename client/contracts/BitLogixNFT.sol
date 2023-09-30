@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract BitLogixNFT is ERC721, Ownable {
     using Strings for uint256;
@@ -12,6 +13,9 @@ contract BitLogixNFT is ERC721, Ownable {
 
     // Used to generate the tokenId
     uint256 private _tokenIdCounter;
+
+    // Mapping to store token URIs
+    mapping(uint256 => string) private _tokenURIs;
 
     constructor(string memory baseURI) ERC721("BitLogixNFT", "BLOGIX") {
         _baseTokenURI = baseURI;
