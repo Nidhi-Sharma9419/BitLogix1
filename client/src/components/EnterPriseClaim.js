@@ -1,17 +1,62 @@
-import React, { useState } from "react";
-import EnterpriseNavbar from "./EnterpriseNavbar";
+import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
+import EnterpriseNavbar from './EnterpriseNavbar';
+import BitLogixABI from '../artifacts/contracts/BitLogix.sol/BitLogix.json';
+import { useWeb3React } from '@web3-react/core';
+// Replace this with your contract address
+const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
 export default function EnterpriseClaim() {
+  const [provider, setProvider] = useState(null);
+  const [contract, setContract] = useState(null);
   const [isClaimed, setIsClaimed] = useState(false);
-  const [randomNumber, setRandomNumber] = useState(0);
+  const [claimedAmount, setClaimedAmount] = useState(0); // To store the claimed amount from the contract
+  const {account} = useWeb3React();
 
-  const handleClaim = () => {
-    // Generate a random number between 1.0 and 10.0 with 0.1 precision
-    const newRandomNumber = ((Math.random() * 90 + 10) / 10).toFixed(1);
-    
-    // Update state to show the claimed content
-    setRandomNumber(newRandomNumber);
-    setIsClaimed(true);
+  
+
+  useEffect(() => {
+    async function initEthers() {
+      if (account) {
+        try {
+          // Connect to the Ethereum provider
+          const providerInstance = new ethers.BrowserProvider(window.ethereum);
+          setProvider(providerInstance);
+
+          // Initialize the contract
+          const signer = await providerInstance.getSigner();
+          const contractInstance = new ethers.Contract(contractAddress, BitLogixABI.abi, signer);
+          setContract(contractInstance);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+
+    initEthers();
+  }, []);
+
+  // Function to claim tokens from the smart contract
+  const handleClaim = async () => {
+    if (contract && provider) {
+      try {
+        const signer = provider.getSigner();
+        const senderAddress = await signer.getAddress();
+
+        // Call the claimTokens function in the smart contract
+        await contract.claimTokens({ gasLimit: 200000, gasPrice: ethers.parseUnits('20', 'gwei') });
+
+        // Get the claimed token amount from the contract
+        const claimedTokenAmount = await contract.balanceOf(senderAddress); // Replace with the actual contract method for checking the balance
+
+        // Update the claimed state and amount
+        setClaimedAmount(claimedTokenAmount.toString());
+        console.log("tell me");
+        setIsClaimed(true);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -26,7 +71,7 @@ export default function EnterpriseClaim() {
           <>
             <img src={"/gift.svg"} alt="Gift" className="w-96 mx-auto" />
             <span className="text-green-500 font-Pantel font-medium text-2xl text-center mt-5">
-              You earned {randomNumber} BTT from our token Box.
+              You earned {claimedAmount} BTT from our token Box.
             </span>
           </>
         ) : (
