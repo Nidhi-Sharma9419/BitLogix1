@@ -31,7 +31,7 @@ As businesses navigate the complex world of logistics, BitLogix emerges as a bea
 * **Frontend:** The frontend of our Dapp offers an intuitive interface for users to manage their supply chains efficiently, with seamless integration of Metamask for secure transactions.
 * **BitLogix Smart Contract:** The BitLogix core smart contract manages registration, product creation, payment automation, and token rewards.
 * **BitLogixNFT Smart Contract:** A specialized smart contract that allows enterprises to mint and transfer NFTs as reward to recipient associated with products for maintaining quality of product leads to enhancing quality control.
-* **Metamask:** Metamask, a popular Ethereum wallet extension, is seamlessly integrated to facilitate secure transactions, account management, and interactions with the Ethereum blockchain.
+* **Metamask:** Metamask, a popular Ethereum wallet extension, is seamlessly integrated to facilitate secure transactions, account management, and interactions with the BitTorrent chain.
 * **Backend:** BitLogix's backend infrastructure supports data management and decentralized file storage.
 * **MongoDB:** A scalable and flexible NoSQL database that stores essential data related to user accounts, product details, and transaction history.
 * **IPFS:** A distributed file system for storing and retrieving large files and IPFS URIs associated with NFTs. IPFS ensures data availability and reliability while reducing centralized data dependencies.
@@ -135,19 +135,27 @@ The BitLogixNFT Smart Contract enhances quality control within BitLogix. It allo
 **Functions**
 
 ```
-mintNFT(address to, string memory ipfsURI) public onlyOwner
+function mintNFT(address to, string memory ipfsURI) public
 ```
-* Allows the contract owner (BitLogix) to mint new NFTs with associated IPFS URIs.
+* To mint a new NFT with an associated IPFS URI, call the mintNFT function
 
 ```
-setBaseURI(string memory newBaseURI) public onlyOwner
+function setBaseURI(string memory newBaseURI) public
 ```
-* Enables the contract owner to update the base URI for token metadata.
+* The setBaseURI function allows you to update the base URI used for NFT metadata. 
 
 ```
 tokenURI(uint256 tokenId) public view override returns (string memory)
 ```
 * Retrieves token-specific URIs for NFTs.
+
+**Transferring NFTs**
+
+You can transfer NFTs between addresses using standard ERC721 transfer functions such as 'transferFrom' and 'safeTransferFrom'.
+
+**Contract Structure**
+
+BitLogixNFT is an ERC721 contract that extends the OpenZeppelin ERC721 and Ownable contracts.
 
 # Troubleshooting
 
