@@ -13,36 +13,39 @@ contract BitLogixNFT is ERC721, Ownable {
     // Used to generate the tokenId
     uint256 private _tokenIdCounter;
 
-    // Mapping to store IPFS URIs associated with each token ID
-    mapping(uint256 => string) private _tokenIPFSURIs;
-
     constructor(string memory baseURI) ERC721("BitLogixNFT", "BLOGIX") {
         _baseTokenURI = baseURI;
+        _tokenIdCounter = 0;
     }
 
     // Mint a new NFT with the associated IPFS URI
-    function mintNFT(address to, string memory ipfsURI) public onlyOwner {
+    function mintNFT(address to, string memory ipfsURI) public {
         _tokenIdCounter += 1;
         uint256 newTokenId = _tokenIdCounter;
         _mint(to, newTokenId);
-        _tokenIPFSURIs[newTokenId] = ipfsURI;
+        _setTokenURI(newTokenId, ipfsURI);
+    }
+
+    // Function to update the base URI
+    function setBaseURI(string memory newBaseURI) public {
+        _baseTokenURI = newBaseURI;
+    }
+
+    // Internal function to set token URI
+    function _setTokenURI(uint256 tokenId, string memory newTokenURI) internal {
+        _tokenURIs[tokenId] = newTokenURI;
     }
 
     // Override the base URI function to include token-specific URI
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(_exists(tokenId), "Token does not exist");
         string memory base = _baseTokenURI;
-        string memory ipfsURI = _tokenIPFSURIs[tokenId];
+        string memory ipfsURI = _tokenURIs[tokenId];
         
         // Ensure the token has an associated IPFS URI
         require(bytes(ipfsURI).length > 0, "IPFS URI not set for this token");
 
         // Concatenate the base URI and IPFS URI
         return string(abi.encodePacked(base, ipfsURI));
-    }
-
-    // Function to update the base URI (onlyOwner)
-    function setBaseURI(string memory newBaseURI) public onlyOwner {
-        _baseTokenURI = newBaseURI;
     }
 }
