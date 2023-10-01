@@ -6,7 +6,7 @@ import { BrowserProvider, ethers } from "ethers";
 import BitLogixABI from "../artifacts/contracts/BitLogix.sol/BitLogix.json";
 //import provider from './ethers';
 
-const chainId = 11155111;
+
 
 //const provider = new ethers.BrowserProvider(rpcEndpoint, { chainId });
 
