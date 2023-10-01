@@ -20,6 +20,7 @@ import QualityEnt from './components/QualityEnt';
 import Mint from './components/Mint';
 import EnterpriseClaim from './components/EnterPriseClaim';
 import RecipientClaim from './components/RecipientClaim';
+import QualityRec from './components/QualityRec';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Route path='/checkenterprise' element={<CheckBalanceEnt />} />
         <Route path='/checkrecipient' element={<CheckBalanceRec />} />
         <Route path='/qualityenterprise' element={<QualityEnt />} />
+        <Route path='/qualityrecipient' element={<QualityRec />} />
         <Route path='/mint' element={<Mint />} />
         <Route path='/claiment' element={<EnterpriseClaim />} />
         <Route path='/claimrec' element={<RecipientClaim />} />
