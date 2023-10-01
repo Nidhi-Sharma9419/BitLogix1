@@ -5,7 +5,7 @@ import BitLogixABI from "../artifacts/contracts/BitLogix.sol/BitLogix.json";
 
 export default function Recipient() {
   const [isloading, setIsLoading] = useState(false);
-  const url = "http://localhost:5000/api/v1/user"
+  const url = process.env.REACT_APP_BACKEND_URL
 /*
     const [formd,setFormd] = useState({
       type:"recipient",
@@ -38,7 +38,7 @@ export default function Recipient() {
           id
         );
         await tx.wait();
-        await fetch(`${url}`, {
+        await fetch(`${url}/api/v1/user/`, {
           method: "POST",
           crossDomain: true,
           headers: {
