@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import {ethers} from "ethers";
 import BitLogixABI from "../artifacts/contracts/BitLogix.sol/BitLogix.json";
+import { Signer } from "@ethersproject/abstract-signer";
 
 export default function Recipient() {
   const [isloading, setIsLoading] = useState(false);
@@ -25,20 +26,25 @@ export default function Recipient() {
         }
         setIsLoading(true);
         const bitLogixContractAddress="0x5FbDB2315678afecb367f032d93F642f64180aa3";
-        const provider = new ethers.BrowserProvider(window.ethereum);
+        //const provider = new ethers.BrowserProvider(window.ethereum);
+        const provider = new ethers.JsonRpcProvider();
         const signer = await provider.getSigner();
         const bitLogixContract = new ethers.Contract(
           bitLogixContractAddress,
           BitLogixABI.abi,
           signer
         );
+        console.log("Is it working?");
         const tx = await bitLogixContract.registerRecipient(
+          
           fullName,
           detail,
           id
         );
+        console.log("Is it working?");
         await tx.wait();
-        await fetch(`${url}/api/v1/user/`, {
+        console.log("Is it working?");
+        await fetch(`${url}/api/v1/user`, {
           method: "POST",
           crossDomain: true,
           headers: {
@@ -58,6 +64,7 @@ export default function Recipient() {
           // navigate("/success")
         });
         setIsLoading(false);
+        console.log("Is it working?");
         console.log("Registration Successful");
 
       }catch(error){
