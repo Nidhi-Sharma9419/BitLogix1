@@ -74,8 +74,8 @@ export default function RecipientProductPage() {
               </>
             ) : (
               <>
-                <h1 className="text-center font-bold">
-                  No product deliveries done in the past
+                <h1 className="text-center font-bold text-2xl mt-20">
+                  No product deliveries done!!
                 </h1>
               </>
             )}

@@ -1,7 +1,6 @@
 const User = require("./usermodal");
 const Product = require("./productmodal");
 
-
 const createuser = async (req, res) => {
   const { address, type, name, place, govtid } = req.body;
   const totald = {
@@ -34,20 +33,38 @@ const getUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req,res) => {
+const getUsers = async (req, res) => {
   try {
-      const {address:useraddress} = req.params
-      const response = await User.findOneAndUpdate({address:useraddress},req.body, {
-          new:true,
-      })
-      if(!response) {
-          return res.status(404).json({msg:`no user found with id ${useraddress}`})
-      }
-      res.status(200).json({response})
+    const response = await User.find({});
+    if (!response) {
+      return res.status(404).json({ msg: `no users found` });
+    }
+    res.status(200).json({ response });
   } catch (error) {
-      res.status(500).json({ msg:error})
+    res.status(500).json({ msg: error });
   }
-}
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const { address: useraddress } = req.params;
+    const response = await User.findOneAndUpdate(
+      { address: useraddress },
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (!response) {
+      return res
+        .status(404)
+        .json({ msg: `no user found with id ${useraddress}` });
+    }
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
 
 const createproduct = async (req, res) => {
   try {
@@ -59,72 +76,100 @@ const createproduct = async (req, res) => {
 };
 
 const getRecProduct = async (req, res) => {
-    try {
-      const { address: address } = req.params;
-      const response = await Product.find({ recipientaddress: address });
-      if (!response) {
-        return res
-          .status(404)
-          .json({ msg: `no products found for address ${address}` });
+  try {
+    const { address: address } = req.params;
+    const response = await Product.find({ recipientaddress: address });
+    if (!response) {
+      return res
+        .status(404)
+        .json({ msg: `no products found for address ${address}` });
+    }
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
+const getEntProduct = async (req, res) => {
+  try {
+    const { address: address } = req.params;
+    const response = await Product.find({ enterpriseaddress: address });
+    if (!response) {
+      return res
+        .status(404)
+        .json({ msg: `no products found for address ${address}` });
+    }
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
+const getProduct = async (req, res) => {
+  try {
+    const { id: productID } = req.params;
+    const response = await Product.findOne({ _id: productID });
+    if (!response) {
+      return res
+        .status(404)
+        .json({ msg: `no product found with id ${productID}` });
+    }
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
+const updateProduct = async (req, res) => {
+  try {
+    const { id: productID } = req.params;
+    const response = await Product.findOneAndUpdate(
+      { _id: productID },
+      req.body,
+      {
+        new: true,
       }
-      res.status(200).json({ response });
-    } catch (error) {
-      res.status(500).json({ msg: error });
+    );
+    if (!response) {
+      return res
+        .status(404)
+        .json({ msg: `no product found with id ${productID}` });
     }
-  };
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+const getDetFromEnt = async (req, res) => {
+  let response = [];
+  try {
+    // to get the products which are sent from an enterprise
+    const { address: address } = req.params;
+    const resp = await Product.find({ enterpriseaddress: address });
 
-
-  const getEntProduct = async (req, res) => {
-    try {
-      const { address: address } = req.params;
-      const response = await Product.find({ enterpriseaddress: address });
-      if (!response) {
-        return res
-          .status(404)
-          .json({ msg: `no products found for address ${address}` });
+    for(let i=0;i<resp.length;i++) {
+      //to get the data of each recipient (to which enterprise sent atleast a single product)
+      const rec = await User.findOne({ address: resp[i].recipientaddress });
+      if(rec && !(response.some(el => el.address ===resp[i].recipientaddress)) ) {
+        response.push(rec)
       }
-      res.status(200).json({ response });
-    } catch (error) {
-      res.status(500).json({ msg: error });
-    }
-  };
-  
-  const getProduct = async (req,res) => {
-    try {
-        const {id:productID} = req.params;
-        const response= await Product.findOne({_id:productID})
-        if(!response) {
-            return res.status(404).json({msg:`no product found with id ${productID}`})
-        }
-        res.status(200).json({response})
-    } catch (error) {
-        res.status(500).json({ msg:error})
-    }
-}
 
-
-  const updateProduct = async (req,res) => {
-    try {
-        const {id:productID} = req.params
-        const response = await Product.findOneAndUpdate({_id:productID},req.body, {
-            new:true,
-        })
-        if(!response) {
-            return res.status(404).json({msg:`no product found with id ${productID}`})
-        }
-        res.status(200).json({response})
-    } catch (error) {
-        res.status(500).json({ msg:error})
     }
-}
+    res.status(200).json({response})
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
 
 module.exports = {
   createuser,
   getUser,
+  getUsers,
   updateUser,
   createproduct,
   getProduct,
   getRecProduct,
   getEntProduct,
   updateProduct,
+  getDetFromEnt,
 };

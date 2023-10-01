@@ -79,9 +79,9 @@ export default function EnterpriseProductPage() {
                 </div>
               </>
             ) : (
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center text-2xl mt-20">
                 <h1 className="text-center font-bold">
-                  No product deliveries done in the past
+                  No product deliveries done!!
                 </h1>
               </div>
             )}
