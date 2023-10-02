@@ -43,7 +43,7 @@ function App() {
         <Route path='/checkrecipient' element={<CheckBalanceRec />} />
         <Route path='/qualityenterprise' element={<QualityEnt />} />
         <Route path='/qualityrecipient' element={<QualityRec />} />
-        <Route path='/mint' element={<Mint />} />
+        <Route path='/mint/:recaddress' element={<Mint />} />
         <Route path='/claiment' element={<EnterpriseClaim />} />
         <Route path='/claimrec' element={<RecipientClaim />} />
       </Routes>

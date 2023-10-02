@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function EnterpriseNavbar() {
+export default function RecipientNavbar() {
   return (
     <>
       <div>
@@ -15,6 +15,9 @@ export default function EnterpriseNavbar() {
           </Link>
           <Link to="/checkrecipient">
             <button className="hover:underline">Check Balance</button>
+          </Link>
+          <Link to="/qualityrecipient">
+            <button className="hover:underline">Quality Assurance</button>
           </Link>
         </div>
       </div>
