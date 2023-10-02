@@ -1,0 +1,306 @@
+[
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "claimTokens",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "enterpriseAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "productIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "confirmReceipt",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "Price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "quantity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "pickupPlace",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "destinationPlace",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "recipientAddress",
+				"type": "address"
+			}
+		],
+		"name": "createProduct",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "deposit",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "enterpriseProducts",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "Price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "quantity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "pickupPlace",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "destinationPlace",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "recipientAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "isDelivered",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "enterprises",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "businessDetails",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "govAuthorizedID",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "isRegistered",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "hasClaimedTokens",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "balance",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getContractBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "platformFeesCollected",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "recipients",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "placeOfBusiness",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "govAuthorizedID",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "isRegistered",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "hasClaimedTokens",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "businessDetails",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "govAuthorizedID",
+				"type": "string"
+			}
+		],
+		"name": "registerEnterprise",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "placeOfBusiness",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "govAuthorizedID",
+				"type": "string"
+			}
+		],
+		"name": "registerRecipient",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tokenRewardAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "withdrawPlatformFees",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]

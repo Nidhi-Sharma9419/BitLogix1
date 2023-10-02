@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import {ethers} from "ethers";
-import BitLogixABI from "../artifacts/contracts/BitLogix.sol/BitLogix.json";
+import BitLogixABI from "../ABI/BitLogix.json";
 import { Signer } from "@ethersproject/abstract-signer";
 
 export default function Recipient() {
   const [isloading, setIsLoading] = useState(false);
   const url = process.env.REACT_APP_BACKEND_URL
+  const [recipients, setRecipients] = useState("");
 /*
     const [formd,setFormd] = useState({
       type:"recipient",
@@ -14,6 +15,7 @@ export default function Recipient() {
       place:"",
       govtid:"",
     })*/
+    
     const [fullName, setFullName] = useState();
   const [detail, setDetails] = useState();
   const [id, setID] = useState();
@@ -25,18 +27,18 @@ export default function Recipient() {
           return;
         }
         setIsLoading(true);
-        const bitLogixContractAddress="0x5FbDB2315678afecb367f032d93F642f64180aa3";
+        const bitLogixContractAddress="0x6fa424C2379E7b86d039562dA5E8b6E25dcc4af5";
         //const provider = new ethers.BrowserProvider(window.ethereum);
-        const provider = new ethers.JsonRpcProvider();
+        const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const bitLogixContract = new ethers.Contract(
           bitLogixContractAddress,
-          BitLogixABI.abi,
+          BitLogixABI,
           signer
         );
         console.log("Is it working?");
         const tx = await bitLogixContract.registerRecipient(
-          
+
           fullName,
           detail,
           id
@@ -63,8 +65,32 @@ export default function Recipient() {
           setIsLoading(false);
           // navigate("/success")
         });
+
+        const response = await fetch(`${url}/api/v1/user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Set content type to JSON
+            // Add other headers if necessary
+          },
+          body: JSON.stringify({
+            type: "recipient",
+            name: fullName,
+            place: detail,
+            govtid: id,
+          }),
+        });
+
+        if (!response.ok) {
+          // Handle HTTP error responses here
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+    
+        // Handle successful response
+        const responseData = await response.json();
+        console.log(responseData);
         setIsLoading(false);
-        console.log("Is it working?");
+        console.log("Registration Successful");
+        
         console.log("Registration Successful");
 
       }catch(error){
@@ -72,6 +98,8 @@ export default function Recipient() {
       setIsLoading(false);
       }
     }
+
+   
 
     
     
