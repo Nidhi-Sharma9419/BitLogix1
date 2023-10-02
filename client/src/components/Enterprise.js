@@ -6,8 +6,6 @@ import { BrowserProvider, ethers } from "ethers";
 import BitLogixABI from "../ABI/BitLogix.json";
 //import provider from './ethers';
 
-
-
 //const provider = new ethers.BrowserProvider(rpcEndpoint, { chainId });
 
 export default function Enterprise() {
@@ -55,14 +53,14 @@ export default function Enterprise() {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          address:account,
-          type:"enterprise",
+          address: account,
+          type: "enterprise",
           name: fullName,
           place: detail,
           govtid: id,
         }),
       }).then((res) => {
-        navigate("/addproduct")
+        navigate("/claiment");
         // console.log(res);
         setIsLoading(false);
       });

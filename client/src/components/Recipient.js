@@ -3,8 +3,11 @@ import { useWeb3React } from "@web3-react/core";
 import {ethers} from "ethers";
 import BitLogixABI from "../ABI/BitLogix.json";
 import { Signer } from "@ethersproject/abstract-signer";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Recipient() {
+  const navigate = useNavigate();
   const [isloading, setIsLoading] = useState(false);
   const url = process.env.REACT_APP_BACKEND_URL
   const [recipients, setRecipients] = useState("");
@@ -55,6 +58,7 @@ export default function Recipient() {
             "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify({
+            address:account,
             type:"recipient",
             name: fullName,
             place: detail,
@@ -63,33 +67,11 @@ export default function Recipient() {
         }).then((res) => {
           console.log(res);
           setIsLoading(false);
-          // navigate("/success")
+          navigate("/claimrec")
         });
 
-        const response = await fetch(`${url}/api/v1/user`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json", // Set content type to JSON
-            // Add other headers if necessary
-          },
-          body: JSON.stringify({
-            type: "recipient",
-            name: fullName,
-            place: detail,
-            govtid: id,
-          }),
-        });
-
-        if (!response.ok) {
-          // Handle HTTP error responses here
-          throw new Error(`HTTP Error: ${response.status}`);
-        }
-    
-        // Handle successful response
-        const responseData = await response.json();
-        console.log(responseData);
-        setIsLoading(false);
-        console.log("Registration Successful");
+       
+       
         
         console.log("Registration Successful");
 
