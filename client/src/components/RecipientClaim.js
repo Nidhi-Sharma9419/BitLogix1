@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import RecipientNavbar from './RecipientNavbar';
-import BitLogixABI from '../artifacts/contracts/BitLogix.sol/BitLogix.json';
+import BitLogixABI from '../ABI/BitLogix.json';
 import { useWeb3React } from '@web3-react/core';
 // Replace this with your contract address
-const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+const contractAddress = '0x6fa424C2379E7b86d039562dA5E8b6E25dcc4af5';
 
 export default function EnterpriseClaim() {
   const [provider, setProvider] = useState(null);
@@ -24,8 +24,8 @@ export default function EnterpriseClaim() {
           setProvider(providerInstance);
 
           // Initialize the contract
-          const signer = await providerInstance.getSigner();
-          const contractInstance = new ethers.Contract(contractAddress, BitLogixABI.abi, signer);
+          const signer = await provider.getSigner();
+          const contractInstance = new ethers.Contract(contractAddress, BitLogixABI, signer);
           setContract(contractInstance);
         } catch (error) {
           console.error(error);
@@ -41,13 +41,13 @@ export default function EnterpriseClaim() {
     if (contract && provider) {
       try {
         const signer = provider.getSigner();
-        const senderAddress = await signer.FundMe.address;
+        const senderAddress = await signer.address;
 
         // Call the claimTokens function in the smart contract
-        await contract.claimTokens({ gasLimit: 200000, gasPrice: ethers.parseUnits('20', 'gwei') });
+        await contract.claimTokens({ gasLimit: 200000, gasPrice: ethers.parseUnits('9000000', 'gwei') });
 
         // Get the claimed token amount from the contract
-        const claimedTokenAmount = await contract.balanceOf(senderAddress); // Replace with the actual contract method for checking the balance
+        const claimedTokenAmount = await contract.getContractBalance(senderAddress); // Replace with the actual contract method for checking the balance
 
         // Update the claimed state and amount
         setClaimedAmount(claimedTokenAmount.toString());
