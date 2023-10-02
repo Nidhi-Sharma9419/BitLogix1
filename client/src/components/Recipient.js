@@ -66,30 +66,8 @@ export default function Recipient() {
           // navigate("/success")
         });
 
-        const response = await fetch(`${url}/api/v1/user`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json", // Set content type to JSON
-            // Add other headers if necessary
-          },
-          body: JSON.stringify({
-            type: "recipient",
-            name: fullName,
-            place: detail,
-            govtid: id,
-          }),
-        });
-
-        if (!response.ok) {
-          // Handle HTTP error responses here
-          throw new Error(`HTTP Error: ${response.status}`);
-        }
-    
-        // Handle successful response
-        const responseData = await response.json();
-        console.log(responseData);
-        setIsLoading(false);
-        console.log("Registration Successful");
+       
+       
         
         console.log("Registration Successful");
 
