@@ -34,7 +34,7 @@ export default function EnterpriseClaim() {
     }
 
     initEthers();
-  }, []);
+  }, [account]);
 
   // Function to claim tokens from the smart contract
   const handleClaim = async () => {
@@ -47,7 +47,7 @@ export default function EnterpriseClaim() {
         await contract.claimTokens({ gasLimit: 200000, gasPrice: ethers.parseUnits('9000000', 'gwei') });
 
         // Get the claimed token amount from the contract
-        const claimedTokenAmount = await contract.getContractBalance(senderAddress); // Replace with the actual contract method for checking the balance
+        const claimedTokenAmount = await contract.getContractBalance(); // Replace with the actual contract method for checking the balance
 
         // Update the claimed state and amount
         setClaimedAmount(claimedTokenAmount.toString());
