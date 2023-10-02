@@ -60,7 +60,7 @@ export default function Footer() {
               </Link>
             </span>
             <span>
-              <a href="/" className="hover:text-sky-200">
+              <a href="https://github.com/suraj719/BitLogix/blob/main/README.md" className="hover:text-sky-200">
                 ReadMe
               </a>
             </span>

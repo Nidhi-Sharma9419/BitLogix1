@@ -21,6 +21,8 @@ import Mint from './components/Mint';
 import EnterpriseClaim from './components/EnterPriseClaim';
 import RecipientClaim from './components/RecipientClaim';
 import QualityRec from './components/QualityRec';
+import InventoryEnt from './components/InventoryEnt';
+import InventoryRec from './components/InventoryRec';
 
 
 function App() {
@@ -46,6 +48,8 @@ function App() {
         <Route path='/mint/:recaddress' element={<Mint />} />
         <Route path='/claiment' element={<EnterpriseClaim />} />
         <Route path='/claimrec' element={<RecipientClaim />} />
+        <Route path='/inventoryent' element={<InventoryEnt />} />
+        <Route path='/inventoryrec' element={<InventoryRec />} />
       </Routes>
     </Router>
   );

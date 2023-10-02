@@ -19,6 +19,9 @@ export default function RecipientNavbar() {
           <Link to="/qualityrecipient">
             <button className="hover:underline">Quality Assurance</button>
           </Link>
+          <Link to="/inventoryrec">
+            <button className="hover:underline">Inventory Management</button>
+          </Link>
         </div>
       </div>
     </>

@@ -156,8 +156,7 @@ export default function ProductDetails() {
                 <input
                   type="text"
                   name="name"
-                  id=""
-                  placeholder="John Mortis"
+                  placeholder="lorem ipsum"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -168,7 +167,6 @@ export default function ProductDetails() {
                 <input
                   type="text"
                   name="number"
-                  id=""
                   placeholder="40$"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setPrice(e.target.value)}
@@ -180,8 +178,7 @@ export default function ProductDetails() {
                 <input
                   type="number"
                   name="name"
-                  id=""
-                  placeholder="40 KG"
+                  placeholder="40"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setQuantity(e.target.value)}
                   required
@@ -192,7 +189,6 @@ export default function ProductDetails() {
                 <input
                   type="text"
                   name="name"
-                  id=""
                   placeholder="5331 Rexford Court, Montgomery AL 36116"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setPickupPlace(e.target.value)}
@@ -206,7 +202,6 @@ export default function ProductDetails() {
                 <input
                   type="text"
                   name="name"
-                  id=""
                   placeholder="6095 Terry Lane, Golden CO 80403"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setDestinationPlace(e.target.value)}
@@ -218,7 +213,6 @@ export default function ProductDetails() {
                 <input
                   type="text"
                   name="name"
-                  id=""
                   placeholder="0x63c6770FEb4dcc984c71Ce7Df2928ED400027aC9"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setRecipientAddress(e.target.value)}
