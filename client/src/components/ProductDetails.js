@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import bitLogixContractABI from "../artifacts/contracts/BitLogix.sol/BitLogix.json";
+import EnterpriseNavbar from "./EnterpriseNavbar";
 
 export default function ProductDetails() {
   const url = process.env.REACT_APP_BACKEND_URL;
@@ -136,6 +137,7 @@ export default function ProductDetails() {
 
   return (
     <>
+    <EnterpriseNavbar />
       <div className="flex flex-row-reverse flex-wrap justify-evenly items-center min-h-[100vh]">
         <img
           src="/enterprise.png"
