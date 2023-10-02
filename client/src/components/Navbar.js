@@ -6,7 +6,7 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 // import { useWeb3Context } from ''
 const injectedConnector = new InjectedConnector({
-  supportedChainIds: [1, 3, 4, 5, 42, 11155111, 80001, 199,1029],
+  supportedChainIds: [1, 3, 4, 5, 42, 11155111, 80001, 199, 1029],
 });
 const ContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 export default function Navbar() {
@@ -163,23 +163,33 @@ export default function Navbar() {
               ))}
               {/* <Disclosure.Button> */}
               {/* Connect metamask wallet */}
-              {account ? (
+              {isloading ? (
                 <>
-                  <button
-                    onClick={disconnectWallet}
-                    className="font-bold border-2  border-none px-3 py-1 rounded-full  bg-gray-400 hover:bg-gray-500"
-                  >
-                    Disconnect Wallet
+                  <button className="cursor-progress font-bold border-2  border-none px-3 py-1 rounded-full  bg-gray-400 hover:bg-gray-500">
+                    Connecting to Wallet
                   </button>
                 </>
               ) : (
                 <>
-                  <button
-                    onClick={connectWallet}
-                    className="font-bold border-2 bg-green-400 border-none hover:bg-green-500 px-3 py-1 rounded-full  "
-                  >
-                    Connect Wallet
-                  </button>
+                  {account ? (
+                    <>
+                      <button
+                        onClick={disconnectWallet}
+                        className="font-bold border-2  border-none px-3 py-1 rounded-full  bg-gray-400 hover:bg-gray-500"
+                      >
+                        Disconnect Wallet
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={connectWallet}
+                        className="font-bold border-2 bg-green-400 border-none hover:bg-green-500 px-3 py-1 rounded-full  "
+                      >
+                        Connect Wallet
+                      </button>
+                    </>
+                  )}
                 </>
               )}
               {/* </Disclosure.Button> */}
