@@ -38,7 +38,10 @@ export default function ProductDetails() {
     setIsLoading(true);
     try{
       const bitLogixContractAddress="0x6fa424C2379E7b86d039562dA5E8b6E25dcc4af5";
-      const bitLogixContract = new ethers.Contract(bitLogixContractAddress, bitLogixContractABI, await library.getSigner());
+      
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const bitLogixContract = new ethers.Contract(bitLogixContractAddress, bitLogixContractABI, signer);
  
       const price = ethers.parseUnits("0.000000000000005", "ether");
       const quantity = getBigInt(1);
