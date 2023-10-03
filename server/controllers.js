@@ -1,6 +1,7 @@
 const User = require("./usermodal");
 const Product = require("./productmodal");
-const Reward = require("./rewardmodal")
+const Reward = require("./rewardmodal");
+const Inventory = require('./inventorymodal');
 const createuser = async (req, res) => {
   const { address, type, name, place, govtid } = req.body;
   const totald = {
@@ -141,51 +142,120 @@ const updateProduct = async (req, res) => {
   }
 };
 const getDetFromEnt = async (req, res) => {
+  // quality assurance
   let response = [];
   try {
     // to get the products which are sent from an enterprise
     const { address: address } = req.params;
     const resp = await Product.find({ enterpriseaddress: address });
 
-    for(let i=0;i<resp.length;i++) {
+    for (let i = 0; i < resp.length; i++) {
       //to get the data of each recipient (to which enterprise sent atleast a single product)
       const rec = await User.findOne({ address: resp[i].recipientaddress });
-      if(rec && !(response.some(el => el.address ===resp[i].recipientaddress)) ) {
-        response.push(rec)
+      if (
+        rec &&
+        !response.some((el) => el.address === resp[i].recipientaddress)
+      ) {
+        response.push(rec);
       }
-
     }
-    res.status(200).json({response})
+    res.status(200).json({ response });
   } catch (error) {
     res.status(500).json({ msg: error });
   }
 };
 const getToRec = async (req, res) => {
+  //inverntory management
   let response = [];
   try {
     // to get the products which are sent to a recipient
     const { address: address } = req.params;
     const resp = await Product.find({ recipientaddress: address });
 
-    for(let i=0;i<resp.length;i++) {
-      //to get the data of each recipient (to which enterprise sent atleast a single product)
+    for (let i = 0; i < resp.length; i++) {
+      //to get the data of each enteorise (from which enterprise sent atleast a single product)
       const rec = await User.findOne({ address: resp[i].enterpriseaddress });
-      if(rec && !(response.some(el => el.address ===resp[i].enterpriseaddress)) ) {
-        response.push(rec)
+      if (
+        rec &&
+        response.some(
+          (el) => el.enterpriseaddress === resp[i].enterpriseaddress
+        )
+      ) {
+        const prod = response.find(
+          (ent) => ent.enterpriseaddress === resp[i].enterpriseaddress
+        );
+        if (prod) {
+          prod.sumqty += resp[i].quantity;
+        }
+      } else {
+        response.push({
+          enterpriseaddress: rec.address,
+          enterprisename: rec.name,
+          sumqty: resp[i].quantity,
+        });
       }
     }
-    res.status(200).json({response})
+
+    res.status(200).json({ response });
   } catch (error) {
     res.status(500).json({ msg: error });
   }
 };
+
+const getToRecFromSpecEnt = async (req,res) => {
+  const { recipientaddress: recipientaddress , enterpriseaddress:enterpriseaddress } = req.params;
+  // let response = [];
+  try {
+    // to get the products which are sent to a recipient
+    const resp = await Product.find({ recipientaddress: recipientaddress,enterpriseaddress:enterpriseaddress });
+    const user = await User.findOne({address:enterpriseaddress});
+    let sum = 0
+    for(let i=0;i<resp.length;i++) {
+      sum+=resp[i].quantity
+    }
+    const response = {
+      enterpriseaddress:enterpriseaddress,
+      enterprisename:user.name,
+      enterprisemail:user.email,
+      productsavailable:sum,
+      products:resp
+    }
+    // const rec = await User.findOne({ address: enterpriseaddress });
+    // for (let i = 0; i < resp.length; i++) {
+    //   //to get the data of each enteorise (from which enterprise sent atleast a single product)
+    //   if (
+    //     response.some(
+    //       (el) => el.enterpriseaddress === resp[i].enterpriseaddress
+    //     )
+    //   ) {
+    //     const prod = response.find(
+    //       (ent) => ent.enterpriseaddress === resp[i].enterpriseaddress
+    //     );
+    //     if (prod) {
+    //       prod.sumqty += resp[i].quantity;
+    //     }
+    //   } else {
+    //     response.push({
+    //       enterpriseaddress: rec.address,
+    //       enterprisename: rec.name,
+    //       sumqty: resp[i].quantity,
+    //     });
+    //   }
+    // }
+
+    res.status(200).json({response});
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+
+}
 const createReward = async (req, res) => {
-  const { enterpriseaddress,recipientaddress } = req.body;
+  const { enterpriseaddress, recipientaddress } = req.body;
   const resp = await User.findOne({ address: enterpriseaddress });
   const totald = {
     enterpriseaddress: enterpriseaddress,
     enterprisename: resp.name,
-    recipientaddress:recipientaddress
+    recipientaddress: recipientaddress,
   };
   try {
     const response = await Reward.create(totald);
@@ -210,6 +280,58 @@ const getRewards = async (req, res) => {
   }
 };
 
+const createInventory = async (req,res) => {
+  const { recipientaddress: recipientaddress , enterpriseaddress:enterpriseaddress } = req.params;
+  try {
+    const pro = await Inventory.findOne({recipientaddress:recipientaddress,enterpriseaddress:enterpriseaddress})
+    if(pro) {
+      const response = pro
+      res.status(200).json({response})
+    } else {
+      const resp = await Product.find({ recipientaddress: recipientaddress,enterpriseaddress:enterpriseaddress });
+      const user = await User.findOne({address:enterpriseaddress});
+
+      let sum = 0
+      for(let i=0;i<resp.length;i++) {
+        sum+=resp[i].quantity
+      }
+      const totald = {
+        productsavailable:sum,
+        recipientaddress:recipientaddress,
+        enterpriseaddress:enterpriseaddress,
+        enterprisename:user.name,
+        enterprisemail:user.email,
+      }
+      const response = await Inventory.create(totald);
+      res.status(200).json({response})
+
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+}
+
+const updateInventory = async (req, res) => {
+  try {
+    const { id: inventoryID } = req.params;
+    const response = await Inventory.findOneAndUpdate(
+      { _id: inventoryID },
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (!response) {
+      return res
+        .status(404)
+        .json({ msg: `no inventory found with id ${productID}` });
+    }
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
 module.exports = {
   createuser,
   getUser,
@@ -223,4 +345,8 @@ module.exports = {
   getDetFromEnt,
   createReward,
   getRewards,
+  getToRec,
+  getToRecFromSpecEnt,
+  createInventory,
+  updateInventory,
 };

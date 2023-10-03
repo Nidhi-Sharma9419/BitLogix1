@@ -11,7 +11,7 @@ export default function InventoryRec() {
   const [isloading, setIsloading] = useState(false);
   const fetchdata = () => {
     setIsloading(true);
-    fetch(`${url}/api/v1/recipient/${account}`)
+    fetch(`${url}/api/v1/inventoryrec/${account}`)
       .then((res) => res.json())
       .then((datas) => {
         setData(datas.response);
@@ -33,8 +33,14 @@ export default function InventoryRec() {
           <>
             {data.length ? (
               <>
+                <div className="p-4 flex justify-between">
+                  <p className="font-bold text-2xl underline">Enterprise</p>
+                  <p className="font-bold text-2xl underline">
+                    Products Received
+                  </p>
+                </div>
                 <div className="flex flex-col gap-5 p-4">
-                  {data.map((user, index) => {
+                  {data.map((pro, index) => {
                     return (
                       <div
                         key={index}
@@ -42,18 +48,18 @@ export default function InventoryRec() {
                       >
                         <div className="flex justify-between">
                           <div>
-                            <p className="font-bold text-2xl hover:underline">
-                              {user.name}
-                            </p>
+                            <Link to={`/inventoryrec/${account}`}>
+                              <p className="font-bold text-2xl hover:underline">
+                                {pro.enterprisename}
+                              </p>
+                            </Link>
                             <p className="font-semibold text-xl">
-                              {user.address}
+                              {pro.enterpriseaddress}
                             </p>
                           </div>
-                          <Link to="/addproduct">
-                            <button className="bg-green-200 rounded-lg p-2 font-bold">
-                              ReOrder
-                            </button>
-                          </Link>
+                          <button className="text-2xl font-bold">
+                            {pro.sumqty}
+                          </button>
                         </div>
                       </div>
                     );

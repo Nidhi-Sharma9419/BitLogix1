@@ -15,6 +15,7 @@ export default function Enterprise() {
 
   const [fullName, setFullName] = useState();
   const [detail, setDetails] = useState();
+  const [email,setEmail] = useState();
   const [id, setID] = useState();
   const { account } = useWeb3React();
   async function registerEnterprise() {
@@ -58,6 +59,7 @@ export default function Enterprise() {
           name: fullName,
           place: detail,
           govtid: id,
+          email:email
         }),
       }).then((res) => {
         navigate("/claiment");
@@ -87,7 +89,7 @@ export default function Enterprise() {
           className="px-5 flex items-center justify-center"
           style={{ width: "30rem" }}
         >
-          <div className="w-full h-100">
+          <form onSubmit={registerEnterprise} className="w-full h-100">
             <div>
               <span className="relative mt-6 lg:bottom-20 font-Pantel text-4xl text-[#39FF14] tracking-wider font-medium underline block text-center">
                 ENTERPRISE
@@ -127,7 +129,17 @@ export default function Enterprise() {
                 required
               />
             </div>
-            
+            <div>
+              <label className="block text-gray-700">Email address</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter Your Email"
+                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
             {isloading ? (
               <>
                 <button
@@ -142,16 +154,16 @@ export default function Enterprise() {
             ) : (
               <>
                 <button
-                  type="submit"
+                  // type="submit"
                   className="w-full block bg-green-500 hover:bg-green-400  text-white font-semibold rounded-lg
                     px-4 py-3 mt-6"
-                  onClick={registerEnterprise}
+                  // onClick={registerEnterprise}
                 >
                   Create Account
                 </button>
               </>
             )}
-          </div>
+          </form>
         </div>
       </div>
     </>
