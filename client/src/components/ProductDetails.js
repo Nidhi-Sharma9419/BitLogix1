@@ -3,9 +3,16 @@ import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
+
 import bitLogixContractABI from "../ABI/BitLogix.json";
 import { ethers , getBigInt} from "ethers";
 import { BigNumber} from "@ethersproject/bignumber";
+import EnterpriseNavbar from "./EnterpriseNavbar";
+=======
+
+
+
+
 export default function ProductDetails() {
   const url = process.env.REACT_APP_BACKEND_URL;
   const {account, library} = useWeb3React();
@@ -182,6 +189,7 @@ function sleep(ms) {
 
   return (
     <>
+    <EnterpriseNavbar />
       <div className="flex flex-row-reverse flex-wrap justify-evenly items-center min-h-[100vh]">
         <img
           src="/enterprise.png"
@@ -200,8 +208,7 @@ function sleep(ms) {
                 <input
                   type="text"
                   name="name"
-                  id=""
-                  placeholder="John Mortis"
+                  placeholder="lorem ipsum"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -212,7 +219,6 @@ function sleep(ms) {
                 <input
                   type="text"
                   name="number"
-                  id=""
                   placeholder="40$"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setPrice(e.target.value)}
@@ -224,8 +230,7 @@ function sleep(ms) {
                 <input
                   type="number"
                   name="name"
-                  id=""
-                  placeholder="40 KG"
+                  placeholder="40"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setQuantity(e.target.value)}
                   required
@@ -236,7 +241,6 @@ function sleep(ms) {
                 <input
                   type="text"
                   name="name"
-                  id=""
                   placeholder="5331 Rexford Court, Montgomery AL 36116"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setPickupPlace(e.target.value)}
@@ -250,7 +254,6 @@ function sleep(ms) {
                 <input
                   type="text"
                   name="name"
-                  id=""
                   placeholder="6095 Terry Lane, Golden CO 80403"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setDestinationPlace(e.target.value)}
@@ -262,7 +265,6 @@ function sleep(ms) {
                 <input
                   type="text"
                   name="name"
-                  id=""
                   placeholder="0x63c6770FEb4dcc984c71Ce7Df2928ED400027aC9"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                   onChange={(e) => setRecipientAddress(e.target.value)}

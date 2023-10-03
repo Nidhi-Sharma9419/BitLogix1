@@ -1,6 +1,6 @@
 const User = require("./usermodal");
 const Product = require("./productmodal");
-
+const Reward = require("./rewardmodal")
 const createuser = async (req, res) => {
   const { address, type, name, place, govtid } = req.body;
   const totald = {
@@ -160,6 +160,55 @@ const getDetFromEnt = async (req, res) => {
     res.status(500).json({ msg: error });
   }
 };
+const getToRec = async (req, res) => {
+  let response = [];
+  try {
+    // to get the products which are sent to a recipient
+    const { address: address } = req.params;
+    const resp = await Product.find({ recipientaddress: address });
+
+    for(let i=0;i<resp.length;i++) {
+      //to get the data of each recipient (to which enterprise sent atleast a single product)
+      const rec = await User.findOne({ address: resp[i].enterpriseaddress });
+      if(rec && !(response.some(el => el.address ===resp[i].enterpriseaddress)) ) {
+        response.push(rec)
+      }
+    }
+    res.status(200).json({response})
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+const createReward = async (req, res) => {
+  const { enterpriseaddress,recipientaddress } = req.body;
+  const resp = await User.findOne({ address: enterpriseaddress });
+  const totald = {
+    enterpriseaddress: enterpriseaddress,
+    enterprisename: resp.name,
+    recipientaddress:recipientaddress
+  };
+  try {
+    const response = await Reward.create(totald);
+    res.status(201).json({ response });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
+const getRewards = async (req, res) => {
+  try {
+    const { address: address } = req.params;
+    const response = await Reward.find({ recipientaddress: address });
+    if (!response) {
+      return res
+        .status(404)
+        .json({ msg: `no rewards found for address ${address}` });
+    }
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
 
 module.exports = {
   createuser,
@@ -172,4 +221,6 @@ module.exports = {
   getEntProduct,
   updateProduct,
   getDetFromEnt,
+  createReward,
+  getRewards,
 };

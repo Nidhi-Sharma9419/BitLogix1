@@ -60,7 +60,7 @@ npm install
 Once all the dependencies are installed, you can start the project:
 
 ```
-npm run dev
+npm start
 ```
 
 The project should now be running on `http://localhost:3000`

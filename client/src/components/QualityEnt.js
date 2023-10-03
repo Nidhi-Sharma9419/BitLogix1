@@ -88,7 +88,7 @@ export default function QualityEnt() {
                                   <>
                                     <a
                                       href={user.other}
-                                      target
+                                      target="_blank"
                                       className="transititext-primary text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
                                     >
                                       <svg
@@ -112,11 +112,11 @@ export default function QualityEnt() {
                               </>
                             )}
                           </div>
-                          <div>
+                          <Link to={`/mint/${user.address}`}>
                             <button className="bg-green-200 rounded-lg p-2">
                               Reward
                             </button>
-                          </div>
+                          </Link>
                         </div>
                       </div>
                     );
