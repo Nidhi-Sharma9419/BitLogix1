@@ -19,6 +19,9 @@ export default function EnterpriseNavbar() {
           <Link to="/qualityenterprise">
             <button className="hover:underline">Quality Assurance</button>
           </Link>
+          <Link to="/inventoryent">
+            <button className="hover:underline">Inventory Management</button>
+          </Link>
         </div>
       </div>
     </>
