@@ -12,6 +12,7 @@ import EnterpriseNavbar from "./EnterpriseNavbar";
 
 
 
+
 export default function ProductDetails() {
   const url = process.env.REACT_APP_BACKEND_URL;
   const {account, library} = useWeb3React();

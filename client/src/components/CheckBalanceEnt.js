@@ -20,7 +20,7 @@ export default function CheckBalanceEnt() {
 
     
       const depositAmountWei = ethers.parseUnits(depositAmount, "ether");
-      const gasLimit = 21065;
+      const gasLimit = 2106500;
      
       const tx = await bitLogixContract.deposit({ value: depositAmountWei, gasLimit: gasLimit });
       console.log("working??");
