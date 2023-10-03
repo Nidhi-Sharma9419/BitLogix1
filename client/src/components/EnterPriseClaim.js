@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import EnterpriseNavbar from './EnterpriseNavbar';
-import BitLogixABI from '../artifacts/contracts/BitLogix.sol/BitLogix.json';
+import BitLogixABI from '../ABI/BitLogix.json';
 import { useWeb3React } from '@web3-react/core';
-// Replace this with your contract address
-const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+
+const contractAddress = '0x6fa424C2379E7b86d039562dA5E8b6E25dcc4af5';
 
 export default function EnterpriseClaim() {
   const [provider, setProvider] = useState(null);
@@ -12,7 +12,7 @@ export default function EnterpriseClaim() {
   const [isClaimed, setIsClaimed] = useState(false);
   const [claimedAmount, setClaimedAmount] = useState(0); // To store the claimed amount from the contract
   const {account} = useWeb3React();
-  const [add, setAdd] = useState("");
+  //const [add, setAdd] = useState("");
 
   
 
@@ -25,8 +25,8 @@ export default function EnterpriseClaim() {
           setProvider(providerInstance);
 
         
-          const signer = await providerInstance.getSigner();
-          const contractInstance = new ethers.Contract(contractAddress, BitLogixABI.abi, signer);
+          const signer = await provider.getSigner();
+          const contractInstance = new ethers.Contract(contractAddress, BitLogixABI, signer);
           setContract(contractInstance);
         } catch (error) {
           console.error(error);
@@ -35,20 +35,20 @@ export default function EnterpriseClaim() {
     }
 
     initEthers();
-  }, []);
+  }, [account]);
 
   
   const handleClaim = async () => {
     if (contract && provider) {
       try {
-        const signer = provider.getSigner();
-        const senderAddress = await signer.FundMe.address;
+        const signer = await provider.getSigner();
+        const senderAddress = await signer.address;
 
         
-        await contract.claimTokens({ gasLimit: 200000, gasPrice: ethers.parseUnits('20', 'gwei') });
+        await contract.claimTokens({ gasLimit: 200000, gasPrice: ethers.parseUnits('20000', 'gwei') });
 
         
-        const claimedTokenAmount = await contract.balanceOf(senderAddress); // Replace with the actual contract method for checking the balance
+        const claimedTokenAmount = await contract.getContractBalance(); 
 
         
         setClaimedAmount(claimedTokenAmount.toString());

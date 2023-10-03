@@ -20,16 +20,16 @@ export default function CheckBalanceEnt() {
 
     
       const depositAmountWei = ethers.parseUnits(depositAmount, "ether");
-
+      const gasLimit = 21065;
      
-      const tx = await bitLogixContract.deposit({ value: depositAmountWei });
-
+      const tx = await bitLogixContract.deposit({ value: depositAmountWei, gasLimit: gasLimit });
+      console.log("working??");
       await tx.wait();
 
   
+      
     } catch (error) {
       console.error("Error depositing tokens:", error);
-    
     }
   };
 
@@ -73,6 +73,20 @@ export default function CheckBalanceEnt() {
               Get Details
             </button>
           </form>
+          <div className="flex gap-5">
+          <button className="bg-indigo-300 p-2 rounded-lg font-bold" onClick={handleDeposit}>
+            Deposit
+          </button>
+          <input
+            type="number"
+            name="depositAmount"
+            placeholder="Enter deposit amount in BTT"
+            className="w-[150px] px-4 py-3 rounded-lg bg-gray-200 border focus:border-blue-500 focus:bg-white focus:outline-none"
+            required
+            onChange={(e) => setDepositAmount(e.target.value)}
+          />
+        </div>
+
         {data ? (
           <>
             <div className=" text-2xl flex flex-col gap-3">
@@ -154,19 +168,7 @@ export default function CheckBalanceEnt() {
           ) : (
             <></>
           )}
-          <div className="flex gap-5">
-          <button className="bg-indigo-300 p-2 rounded-lg font-bold" onClick={handleDeposit}>
-            Deposit
-          </button>
-          <input
-            type="number"
-            name="depositAmount"
-            placeholder="Enter deposit amount in BTT"
-            className="w-[150px] px-4 py-3 rounded-lg bg-gray-200 border focus:border-blue-500 focus:bg-white focus:outline-none"
-            required
-            onChange={(e) => setDepositAmount(e.target.value)}
-          />
-        </div>
+          
         </div>
         <div className="flex items-start gap-5">
           <button className="bg-sky-200 p-2 rounded-lg font-bold">

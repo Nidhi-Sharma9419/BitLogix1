@@ -33,14 +33,14 @@ export default function ProductDetails() {
       const bitLogixContractAddress="0x6fa424C2379E7b86d039562dA5E8b6E25dcc4af5";
       const bitLogixContract = new ethers.Contract(bitLogixContractAddress, bitLogixContractABI, library.getSigner());
  
-      const price = ethers.parseUnits("0.00000005", "ether");
+      const price = ethers.parseUnits("0.000000000000005", "ether");
       const quantity = getBigInt(1);
 
       const result = price*(quantity);
 
       console.log(result.toString());
       const totalPaymentInBTT =result;
-      const gasLimit = ethers.parseUnits("200000", "wei");
+      const gasLimit = ethers.parseUnits("20000000", "wei");
       const tx = await bitLogixContract.createProduct(
         name,
         totalPaymentInBTT,
@@ -74,7 +74,7 @@ export default function ProductDetails() {
 
         // Assuming you have a function to fetch and update the product list
         console.log("Working?");
-    await fetchProducts(); //need to make a function to fetch and update the product list
+    /*await fetchProducts(); //need to make a function to fetch and update the product list
 
     setName("");
     setPrice("");
@@ -83,11 +83,11 @@ export default function ProductDetails() {
     setDestinationPlace("");
     setRecipientAddress("");
     setDeliveryDate(null);
-      
-      navigate("/product");
+      */
+      navigate("/products");
         
 
-        // Show a success message or update the UI as needed
+        
       } catch (error) {
         console.log("Receipt error:", error);
         break;
@@ -132,7 +132,7 @@ function sleep(ms) {
      
 
      
-    
+  /*  
 
   const fetchProducts = async() =>{
 
@@ -141,14 +141,10 @@ function sleep(ms) {
       
 
       const bitLogixContract = new ethers.Contract(bitLogixContractAddress, bitLogixContractABI, library);
-      const productCount = await bitLogixContract.enterpriseProducts(account);
-      const products = [];
+      const products = await bitLogixContract.enterpriseProducts(account);
+      //const products = [];
 
-      for (let i = 0; i < productCount; i++) {
-        
-        const product = await bitLogixContract.getEnterpriseProduct(account, i);
-        products.push(product);
-      }
+      
 
       setProducts(products);
     } catch (error) {
@@ -159,7 +155,7 @@ function sleep(ms) {
   useEffect(() => {
     // Fetch and update the product list when the component mounts
     fetchProducts();
-  }, []);
+  }, [account, library]);*/
 
   const confirmDelivery = async (productIndex) => {
     setIsLoading(true);
@@ -173,7 +169,7 @@ function sleep(ms) {
       const tx = await bitLogixContract.confirmReceipt(account, productIndex);
       await tx.wait();
       // Assuming you have a function to fetch and update the product list
-      await fetchProducts();
+      //await fetchProducts();
 
       // Show a success message or update the UI as needed
     } catch (error) {

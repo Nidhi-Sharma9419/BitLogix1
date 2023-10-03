@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import RecipientNavbar from './RecipientNavbar';
 import BitLogixABI from '../ABI/BitLogix.json';
 import { useWeb3React } from '@web3-react/core';
-// Replace this with your contract address
+
 const contractAddress = '0x6fa424C2379E7b86d039562dA5E8b6E25dcc4af5';
 
 export default function EnterpriseClaim() {
@@ -40,7 +40,7 @@ export default function EnterpriseClaim() {
   const handleClaim = async () => {
     if (contract && provider) {
       try {
-        const signer = provider.getSigner();
+        const signer = await provider.getSigner();
         const senderAddress = await signer.address;
 
         // Call the claimTokens function in the smart contract
