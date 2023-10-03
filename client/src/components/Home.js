@@ -12,7 +12,7 @@ export default function Home() {
             <img
               src={"/home-1.png"}
               alt="home"
-              className="md:mt-20 md:ml-28 md:w-[60%]"
+              className="md:mt-28 md:ml-28 md:w-[60%] rounded-lg mx-10 w-[80%] md:mx-0"
             />
           </div>
           <div className="flex flex-col items-center md:w-[50%] my-5 md:mt-28">
@@ -39,9 +39,9 @@ export default function Home() {
         <div className="flex md:flex-row-reverse flex-col-reverse  justify-around items-center">
           <div className=" hidden md:block">
             <img
-              src={"/btt_logo.webp"}
+              src={"/home-2.png"}
               alt="btt"
-              className="w-[90%]"
+              className="md:mt-20 md:ml-28 md:w-[60%] rounded-lg"
             />
           </div>
           <div className="flex flex-col items-center md:w-[50%] my-5 md:mt-28">
