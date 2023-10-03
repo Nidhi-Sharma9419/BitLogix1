@@ -1,9 +1,38 @@
 import React, { useState } from "react";
 import EnterpriseNavbar from "./EnterpriseNavbar";
+import { ethers } from "ethers";
+import bitLogixContractABI from '../ABI/BitLogix.json';
 export default function CheckBalanceEnt() {
   const [recaddress, setRecaddress] = useState("");
   const [data, setData] = useState();
   const [productData, setProductData] = useState();
+
+  
+  const [depositAmount, setDepositAmount] = useState(""); 
+
+  const handleDeposit = async () => {
+    try {
+      const bitLogixContractAddress = "0x6fa424C2379E7b86d039562dA5E8b6E25dcc4af5";
+     
+  const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const bitLogixContract = new ethers.Contract(bitLogixContractAddress, bitLogixContractABI, signer);
+
+    
+      const depositAmountWei = ethers.parseUnits(depositAmount, "ether");
+
+     
+      const tx = await bitLogixContract.deposit({ value: depositAmountWei });
+
+      await tx.wait();
+
+  
+    } catch (error) {
+      console.error("Error depositing tokens:", error);
+    
+    }
+  };
+
   const handledetails = async (e) => {
     e.preventDefault();
     setData({
@@ -125,6 +154,19 @@ export default function CheckBalanceEnt() {
           ) : (
             <></>
           )}
+          <div className="flex gap-5">
+          <button className="bg-indigo-300 p-2 rounded-lg font-bold" onClick={handleDeposit}>
+            Deposit
+          </button>
+          <input
+            type="number"
+            name="depositAmount"
+            placeholder="Enter deposit amount in BTT"
+            className="w-[150px] px-4 py-3 rounded-lg bg-gray-200 border focus:border-blue-500 focus:bg-white focus:outline-none"
+            required
+            onChange={(e) => setDepositAmount(e.target.value)}
+          />
+        </div>
         </div>
         <div className="flex items-start gap-5">
           <button className="bg-sky-200 p-2 rounded-lg font-bold">

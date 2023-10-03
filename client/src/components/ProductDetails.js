@@ -3,8 +3,9 @@ import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
-import bitLogixContractABI from "../artifacts/contracts/BitLogix.sol/BitLogix.json";
-
+import bitLogixContractABI from "../ABI/BitLogix.json";
+import { ethers , getBigInt} from "ethers";
+import { BigNumber} from "@ethersproject/bignumber";
 export default function ProductDetails() {
   const url = process.env.REACT_APP_BACKEND_URL;
   const {account, library} = useWeb3React();
@@ -23,24 +24,56 @@ export default function ProductDetails() {
   const handleDateChange = (date) => {
     setDeliveryDate(date);
   };
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try{
-      const bitLogixContractAddress="0x5FbDB2315678afecb367f032d93F642f64180aa3";
-      const bitLogixContract = new library.eth.Contract(bitLogixContractABI, bitLogixContractAddress);
-      const totalPaymentInBTT = Number(price)*Number(quantity)*1 ;
-      await bitLogixContract.methods.createProduct(
+      const bitLogixContractAddress="0x6fa424C2379E7b86d039562dA5E8b6E25dcc4af5";
+      const bitLogixContract = new ethers.Contract(bitLogixContractAddress, bitLogixContractABI, library.getSigner());
+ 
+      const price = ethers.parseUnits("0.00000005", "ether");
+      const quantity = getBigInt(1);
+
+      const result = price*(quantity);
+
+      console.log(result.toString());
+      const totalPaymentInBTT =result;
+      const gasLimit = ethers.parseUnits("200000", "wei");
+      const tx = await bitLogixContract.createProduct(
         name,
         totalPaymentInBTT,
         quantity,
         pickupPlace,
         destinationPlace,
-        recipientAddress
-      ).send({from: account});
+        recipientAddress,
+        { gasLimit: gasLimit }
+      );
    
+      //await tx.wait();
+      //await provider.getTransactionReceipt(tx.hash)
+      console.log("Transaction hash:", tx.hash);
+    console.log("Fetching transaction receipt...");
 
+    let receipt = null;
+
+    while (receipt === null) {
+      try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        receipt = await provider.getTransactionReceipt(tx.hash);
+
+        if (receipt === null) {
+          console.log("Trying again to fetch transaction receipt...");
+          await sleep(3000); // Wait for 3 seconds before retrying (optional)
+          continue;
+        }
+
+        console.log("Receipt confirmations:", receipt.confirmations);
+        console.info(`Transaction receipt: ${tx.hash}`);
+
+        // Assuming you have a function to fetch and update the product list
+        console.log("Working?");
     await fetchProducts(); //need to make a function to fetch and update the product list
 
     setName("");
@@ -52,51 +85,68 @@ export default function ProductDetails() {
     setDeliveryDate(null);
       
       navigate("/product");
+        
+
+        // Show a success message or update the UI as needed
+      } catch (error) {
+        console.log("Receipt error:", error);
+        break;
+      }
+    }
+  } catch (error) {
+    console.error("Error creating product:", error);
+  } finally {
+    setIsLoading(false);
+  }
+  await fetch(`${url}/api/v1/product`, {
+    method: "POST",
+    crossDomain: true,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      name: name,
+      price: price,
+      quantity: quantity,
+      pickup: pickupPlace,
+      destination: destinationPlace,
+      recipientaddress: recipientAddress,
+      enterpriseaddress: account,
+      deliverydate: deliveryDate,
+    }),
+  }).then((res) => {
+    navigate("/products");
+    setIsLoading(false);
+  });
+  setIsLoading(false);
+};
+
+
+// Helper function to sleep for a given number of milliseconds
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+      
      
 
-      }catch (error) {
-      console.error("Error creating product:", error);
-    } finally {
-      setIsLoading(false);
-    }
-    await fetch(`${url}/api/v1/product`, {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        name: name,
-        price: price,
-        quantity: quantity,
-        pickup: pickupPlace,
-        destination: destinationPlace,
-        recipientaddress: recipientAddress,
-        enterpriseaddress: account,
-        deliverydate: deliveryDate,
-      }),
-    }).then((res) => {
-      navigate("/products");
-      setIsLoading(false);
-    });
-    setIsLoading(false);
-  };
+     
+    
 
   const fetchProducts = async() =>{
 
     try{
-      const bitLogixContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+      const bitLogixContractAddress = "0x6fa424C2379E7b86d039562dA5E8b6E25dcc4af5";
       
 
-      const bitLogixContract = new library.eth.Contract(bitLogixContractABI, bitLogixContractAddress);
-      const productCount = await bitLogixContract.methods.enterpriseProducts(account).call();
-
+      const bitLogixContract = new ethers.Contract(bitLogixContractAddress, bitLogixContractABI, library);
+      const productCount = await bitLogixContract.enterpriseProducts(account);
       const products = [];
 
       for (let i = 0; i < productCount; i++) {
-        const product = await bitLogixContract.methods.getEnterpriseProduct(account, i).call();
+        
+        const product = await bitLogixContract.getEnterpriseProduct(account, i);
         products.push(product);
       }
 
@@ -115,13 +165,13 @@ export default function ProductDetails() {
     setIsLoading(true);
 
     try {
-      const bitLogixContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+      const bitLogixContractAddress = "0x6fa424C2379E7b86d039562dA5E8b6E25dcc4af5";
 
-      const bitLogixContract = new library.eth.Contract(bitLogixContractABI, bitLogixContractAddress);
+      const bitLogixContract = new ethers.Contract(bitLogixContractAddress, bitLogixContractABI, library.getSigner());
 
       // Call the confirmReceipt function on the smart contract
-      await bitLogixContract.methods.confirmReceipt(account, productIndex).send({ from: account });
-
+      const tx = await bitLogixContract.confirmReceipt(account, productIndex);
+      await tx.wait();
       // Assuming you have a function to fetch and update the product list
       await fetchProducts();
 

@@ -73,6 +73,8 @@ export default function Enterprise() {
     }
   }
 
+  
+
   return (
     <>
       <div className="flex flex-row-reverse flex-wrap justify-evenly items-center min-h-[100vh]">
@@ -125,6 +127,7 @@ export default function Enterprise() {
                 required
               />
             </div>
+            
             {isloading ? (
               <>
                 <button
