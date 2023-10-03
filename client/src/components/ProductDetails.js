@@ -8,7 +8,7 @@ import bitLogixContractABI from "../ABI/BitLogix.json";
 import { ethers , getBigInt} from "ethers";
 import { BigNumber} from "@ethersproject/bignumber";
 import EnterpriseNavbar from "./EnterpriseNavbar";
-=======
+
 
 
 
