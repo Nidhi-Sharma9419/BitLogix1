@@ -1,7 +1,9 @@
 const User = require("./usermodal");
 const Product = require("./productmodal");
 const Reward = require("./rewardmodal");
-const Inventory = require('./inventorymodal');
+const Inventory = require("./inventorymodal");
+const { transporter, mailOptions } = require("./nodemailer");
+
 const createuser = async (req, res) => {
   const { address, type, name, place, govtid } = req.body;
   const totald = {
@@ -202,24 +204,30 @@ const getToRec = async (req, res) => {
   }
 };
 
-const getToRecFromSpecEnt = async (req,res) => {
-  const { recipientaddress: recipientaddress , enterpriseaddress:enterpriseaddress } = req.params;
+const getToRecFromSpecEnt = async (req, res) => {
+  const {
+    recipientaddress: recipientaddress,
+    enterpriseaddress: enterpriseaddress,
+  } = req.params;
   // let response = [];
   try {
     // to get the products which are sent to a recipient
-    const resp = await Product.find({ recipientaddress: recipientaddress,enterpriseaddress:enterpriseaddress });
-    const user = await User.findOne({address:enterpriseaddress});
-    let sum = 0
-    for(let i=0;i<resp.length;i++) {
-      sum+=resp[i].quantity
+    const resp = await Product.find({
+      recipientaddress: recipientaddress,
+      enterpriseaddress: enterpriseaddress,
+    });
+    const user = await User.findOne({ address: enterpriseaddress });
+    let sum = 0;
+    for (let i = 0; i < resp.length; i++) {
+      sum += resp[i].quantity;
     }
     const response = {
-      enterpriseaddress:enterpriseaddress,
-      enterprisename:user.name,
-      enterprisemail:user.email,
-      productsavailable:sum,
-      products:resp
-    }
+      enterpriseaddress: enterpriseaddress,
+      enterprisename: user.name,
+      enterprisemail: user.email,
+      productsavailable: sum,
+      products: resp,
+    };
     // const rec = await User.findOne({ address: enterpriseaddress });
     // for (let i = 0; i < resp.length; i++) {
     //   //to get the data of each enteorise (from which enterprise sent atleast a single product)
@@ -243,12 +251,11 @@ const getToRecFromSpecEnt = async (req,res) => {
     //   }
     // }
 
-    res.status(200).json({response});
+    res.status(200).json({ response });
   } catch (error) {
     res.status(500).json({ msg: error });
   }
-
-}
+};
 const createReward = async (req, res) => {
   const { enterpriseaddress, recipientaddress } = req.body;
   const resp = await User.findOne({ address: enterpriseaddress });
@@ -280,36 +287,44 @@ const getRewards = async (req, res) => {
   }
 };
 
-const createInventory = async (req,res) => {
-  const { recipientaddress: recipientaddress , enterpriseaddress:enterpriseaddress } = req.params;
+const createInventory = async (req, res) => {
+  const {
+    recipientaddress: recipientaddress,
+    enterpriseaddress: enterpriseaddress,
+  } = req.params;
   try {
-    const pro = await Inventory.findOne({recipientaddress:recipientaddress,enterpriseaddress:enterpriseaddress})
-    if(pro) {
-      const response = pro
-      res.status(200).json({response})
+    const pro = await Inventory.findOne({
+      recipientaddress: recipientaddress,
+      enterpriseaddress: enterpriseaddress,
+    });
+    if (pro) {
+      const response = pro;
+      res.status(200).json({ response });
     } else {
-      const resp = await Product.find({ recipientaddress: recipientaddress,enterpriseaddress:enterpriseaddress });
-      const user = await User.findOne({address:enterpriseaddress});
+      const resp = await Product.find({
+        recipientaddress: recipientaddress,
+        enterpriseaddress: enterpriseaddress,
+      });
+      const user = await User.findOne({ address: enterpriseaddress });
 
-      let sum = 0
-      for(let i=0;i<resp.length;i++) {
-        sum+=resp[i].quantity
+      let sum = 0;
+      for (let i = 0; i < resp.length; i++) {
+        sum += resp[i].quantity;
       }
       const totald = {
-        productsavailable:sum,
-        recipientaddress:recipientaddress,
-        enterpriseaddress:enterpriseaddress,
-        enterprisename:user.name,
-        enterprisemail:user.email,
-      }
+        productsavailable: sum,
+        recipientaddress: recipientaddress,
+        enterpriseaddress: enterpriseaddress,
+        enterprisename: user.name,
+        enterprisemail: user.email,
+      };
       const response = await Inventory.create(totald);
-      res.status(200).json({response})
-
+      res.status(200).json({ response });
     }
   } catch (error) {
     res.status(500).json({ msg: error });
   }
-}
+};
 
 const updateInventory = async (req, res) => {
   try {
@@ -325,6 +340,32 @@ const updateInventory = async (req, res) => {
       return res
         .status(404)
         .json({ msg: `no inventory found with id ${productID}` });
+    }
+    if (req.body.date) {
+      try {
+        await transporter.sendMail({
+          from: "bitlogix.vercel@gmail.com",
+          to: `${response.enterprisemail}`,
+          subject: "Date wise Recurring Order",
+          text: `Hello ${response.enterprisename},\nYour recipient ${response.recipientaddress} wants you to send products on the date of ${response.date} every month`,
+        });
+        // return res.status(200).json({ success: true });
+      } catch (error) {
+        // return res.status(400).json({ msg: error.message });
+      }
+    }
+    if (response.triggerlevel >= response.productsavailable) {
+      try {
+        await transporter.sendMail({
+          from: "bitlogix.vercel@gmail.com",
+          to: `${response.enterprisemail}`,
+          subject: "Trigger Level Reached",
+          text: `Hello ${response.enterprisename},\nYour recipient ${response.recipientaddress}'s trigger level is reached.\nPlease Reorder the product`,
+        });
+        // return res.status(200).json({ success: true });
+      } catch (error) {
+        // return res.status(400).json({ msg: error.message });
+      }
     }
     res.status(200).json({ response });
   } catch (error) {

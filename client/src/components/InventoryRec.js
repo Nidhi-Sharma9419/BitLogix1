@@ -46,21 +46,24 @@ export default function InventoryRec() {
                         key={index}
                         className="bg-gray-100 hover:bg-gray-200 rounded-lg px-5 py-3 md:w-[96vw] w-[90vw]"
                       >
-                        <div className="flex justify-between">
-                          <div>
-                            <Link to={`/inventoryrec/${account}`}>
+                        {/* <div className="flex justify-between"> */}
+                          <div className="flex justify-between">
+                            <Link to={`/inventoryrec/${pro.enterpriseaddress}`}>
                               <p className="font-bold text-2xl hover:underline">
                                 {pro.enterprisename}
                               </p>
                             </Link>
-                            <p className="font-semibold text-xl">
+                            <p className="text-2xl font-bold">
+                            {pro.sumqty}
+                          </p>
+                          </div>
+                          <p
+                              className="font-semibold text-lg"
+                              style={{ overflowWrap: "break-word" }}
+                            >
                               {pro.enterpriseaddress}
                             </p>
-                          </div>
-                          <button className="text-2xl font-bold">
-                            {pro.sumqty}
-                          </button>
-                        </div>
+                        {/* </div> */}
                       </div>
                     );
                   })}
