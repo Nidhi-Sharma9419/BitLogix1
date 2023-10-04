@@ -12,7 +12,7 @@ export default function Home() {
             <img
               src={"/home-1.png"}
               alt="home"
-              className="md:mt-28 md:ml-28 md:w-[60%] rounded-lg mx-10 w-[80%] md:mx-0"
+              className="md:mt-28 lg:ml-28 lg:w-[60%] rounded-lg mx-10 w-[80%] lg:mx-0"
             />
           </div>
           <div className="flex flex-col items-center md:w-[50%] my-5 md:mt-28">
@@ -20,19 +20,11 @@ export default function Home() {
             <h3 className="text-xl font-semibold text-center font-mono my-3">
               Elevate Your Business with our DApp
             </h3>
-            <span className="text-justify mt-3 font-medium w-[80%] tracking-wide text-lg hidden md:block">
-              Experience the synergy of our supply chain DApp, where
-              blockchain technology converges with efficient supply chain
-              management. Elevate your enterprise to new heights. Our DApp
-              simplifies the complex world of supply chain management.With
-              real-time tracking, instant payments,and token rewards, you'll
-              unlock a world of possibilities. Experience the future now.
-            </span>
-            <span className="text-left mt-3 font-medium w-[80%] tracking-wide text-lg md:hidden">
-              Experience the future with our Tron-powered supply chain DApp.
-              With real-time tracking, instant payments, and token rewards,
-              unlock endless possibilities. Connect, collaborate, and streamline
-              your supply chain for a brighter tomorrow.
+            <span className="text-justify mt-3 font-medium w-[80%] tracking-wide text-lg">
+              Experience the synergy of our supply chain DApp, where blockchain
+              technology converges with efficient supply chain management.
+              Elevate your enterprise to new heights. Our DApp simplifies the
+              complex world of supply chain management.
             </span>
           </div>
         </div>
@@ -41,7 +33,7 @@ export default function Home() {
             <img
               src={"/home-2.png"}
               alt="btt"
-              className="md:mt-20 md:ml-28 md:w-[60%] rounded-lg"
+              className="lg:mt-20 lg:ml-28 lg:w-[60%] rounded-lg"
             />
           </div>
           <div className="flex flex-col items-center md:w-[50%] my-5 md:mt-28">
@@ -55,6 +47,27 @@ export default function Home() {
               contracts, and cryptographic security. Experience the future with
               real-time tracking, instant payments, and token rewards, unlocking
               endless possibilities.
+            </span>
+          </div>
+        </div>
+        <div className="flex md:flex-row flex-col justify-around items-center">
+          <div className="w-[100%] md:w-auto flex justify-center">
+            <img
+              src={"/community.png"}
+              alt="btt"
+              className="lg:mt-28 lg:ml-28 lg:w-[500px] lg:h-[300px] rounded-lg mx-10 w-[80%] lg:mx-0"
+            />
+          </div>
+          <div className="flex flex-col items-center md:w-[50%] my-5 md:mt-28">
+            <h1 className="text-yellow-400 text-center font-bold font-Pantel text-4xl">
+              Join the BitLogiX Community
+            </h1>
+            <span className="text-justify mt-3 font-medium w-[80%] tracking-normal text-lg">
+              BitLogix is more than just a platform; it's a thriving community
+              of forward-thinkers and passionate supply chain enthusiasts. Our
+              unwavering commitment to transparency, security, and innovation
+              propels us forward. Join us today, and together, we will pioneer
+              the future of supply chain management."
             </span>
           </div>
         </div>
@@ -74,7 +87,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }
