@@ -24,7 +24,8 @@ As businesses navigate the complex world of logistics, BitLogix emerges as a bea
  
 # Architecture
 
-![FRONTEND (1)](https://github.com/suraj719/BitLogix/assets/102855092/54efda95-c74d-4206-978d-6fd9bee6f5ca)
+!(https://github.com/suraj719/BitLogix/assets/102855092/de97f3f3-77c5-482c-bacc-a1c04d7292be)
+
 
 
 
