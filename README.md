@@ -36,7 +36,6 @@ As businesses navigate the complex world of logistics, BitLogix emerges as a bea
 * **Metamask:** Metamask, a popular Ethereum wallet extension, is seamlessly integrated to facilitate secure transactions, account management, and interactions with the BitTorrent chain.
 * **Backend:** BitLogix's backend infrastructure supports data management and decentralized file storage.
 * **MongoDB:** A scalable and flexible NoSQL database that stores essential data related to user accounts, product details, and transaction history.
-* **Pinata SDK:** The Pinata SDK plays a crucial role in enabling secure and decentralized data storage.
 * **IPFS:** A distributed file system for storing and retrieving large files and IPFS URIs associated with NFTs. IPFS ensures data availability and reliability while reducing centralized data dependencies.
 
 # Local installation
@@ -138,6 +137,7 @@ The BitLogixNFT Smart Contract enhances quality control within BitLogix. It allo
 **Inheritance**
 
 **ERC721URIStorage:** Inherits from OpenZeppelin's ERC721URIStorage, providing standard NFT functionality with URI storage.
+
 **Ownable:** Inherits from OpenZeppelin's Ownable, allowing for ownership control of the contract.
 
 **Functions**
@@ -176,7 +176,7 @@ For problems related to creating products, confirming receipt, or tracking produ
 
 If you are encountering problems with quality control, NFT issuance, or communication with the Person-in-Charge, first, make use of the provided contact information to reach out directly. Ensure that you possess the necessary permissions to control product quality and issue NFTs within the BitLogix ecosystem.
 
-# Contribution guidline
+# Contribution guideline
 
 We welcome contributions from anyone who would like to help improve our dapp.
 
