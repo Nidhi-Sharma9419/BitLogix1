@@ -1,7 +1,20 @@
-import React, { useState } from "react";
+import axios from 'axios';
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EnterpriseNavbar from "./EnterpriseNavbar";
 import { useWeb3React } from "@web3-react/core";
+import { ethers } from 'ethers';
+import contractABI from '../ABI/BitLogixNFT.json';
+import {create} from 'ipfs-http-client';
+import { BigNumber} from "@ethersproject/bignumber";
+var Buffer = require('buffer/').Buffer;
+
+const projectId = '2985420746e8ba454e98';
+const projectSecret = '1b4b8765cc741c60b66d93e7f5c39ec54bbde638530f4b3366ef13ada818ddd8';
+const CID = 'QmPE9XtFDidyRAR9GijkKKTh5A8aroun3BvoLDqs7df44o';
+const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
+
+
 
 export default function Mint() {
   const { account } = useWeb3React();
@@ -9,7 +22,19 @@ export default function Mint() {
   const url = process.env.REACT_APP_BACKEND_URL;
   const { recaddress } = useParams();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [islaoding,setIsloading] = useState(false)
+  const [isloading,setIsloading] = useState(false);
+  const [nftMetadata, setNftMetadata] = useState(null);
+  const [fileImg, setFileImg] = useState(null);
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  
+  const contractAddress="0xe278a23290e12ba8c19ba706240d795dbf49303b";
+  const signer = provider.getSigner();
+  const nftContract = new ethers.Contract(contractAddress, contractABI, provider);
+
+  
+
+
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
 
@@ -20,9 +45,48 @@ export default function Mint() {
     }
   };
 
+  const handleUpload = async () => {
+    try {
+      if (selectedFile) {
+       
+        const ipfsURI = await uploadToIPFS(selectedFile);
+
+       
+        const tx = await nftContract.setBaseURI(ipfsURI);
+        await tx.wait();
+
+        
+        const tokenId = '1'; 
+        const tokenMetadataURI = await nftContract.tokenURI(tokenId);
+        const response = await fetch(tokenMetadataURI);
+        if (response.ok) {
+          const metadata = await response.json();
+          setNftMetadata(metadata);
+        }
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
+
   const handleTransfer = async (e) => {
     e.preventDefault();
     setIsloading(true);
+    
+    try {
+      const ipfsURI = 'https://ipfs.io/ipfs/QmPE9XtFDidyRAR9GijkKKTh5A8aroun3BvoLDqs7df44o/';
+      const recipientAddress = recaddress;
+
+      await nftContract.mintNFT(recipientAddress, ipfsURI);
+
+      setIsloading(false);
+      navigate('/qualityenterprise');
+    } catch (error) {
+      console.error(error);
+      setIsloading(false);
+    }
+
+   
     await fetch(`${url}/api/v1/reward`, {
       method: "POST",
       crossDomain: true,
@@ -40,7 +104,106 @@ export default function Mint() {
       navigate("/qualityenterprise");
     });
   }
+
+  const handleMint = async () => {
+    try {
+      const recipientAddress = recaddress;
+      const ipfsURI = nftMetadata ? nftMetadata.image : "";
+
+      await nftContract.mintNFT(recipientAddress, ipfsURI);
+
+      setIsloading(false);
+      navigate("/qualityenterprise");
+    } catch (error) {
+      console.error("Error minting NFT:", error);
+      setIsloading(false);
+    }
+  };
   const backgroundHeightClass = selectedFile ? "h-full" : "h-screen";
+  
+
+  useEffect(() => {
+    async function loadNftMetadata() {
+      try {
+        if (selectedFile) {
+          const tokenId = BigNumber.from('QmPE9XtFDidyRAR9GijkKKTh5A8aroun3BvoLDqs7df44o'); //I need to replace it with the actual token ID
+          const tokenMetadataURI = await nftContract.tokenURI(tokenId);
+          // need to work
+          // Fetch and parse the metadata from the tokenMetadataURI (e.g., from IPFS)
+          const response = await fetch(tokenMetadataURI);
+          if (response.ok) {
+            const metadata = await response.json();
+            setNftMetadata(metadata);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching token metadata:', error);
+      }
+    }
+
+    loadNftMetadata();
+  }, [selectedFile]); 
+
+  /*
+
+  const uploadToIPFS = async (file) => {
+    // Create an IPFS client connected to your IPFS node
+    const ipfs = ipfs({ host: 'localhost', port: 5001, protocol: 'http' }); // Replace with your IPFS node details
+  
+    try {
+      const buffer = Buffer.from(await file.arrayBuffer());
+
+     
+      const response = await ipfs.add(buffer);
+
+      if (response && response[0] && response[0].hash) {
+       
+        const ipfsURI = `https://ipfs.io/ipfs/${response[0].hash}`;
+
+        return ipfsURI;
+      } else {
+        throw new Error("IPFS upload failed.");
+      }
+    } catch (error) {
+      console.error('Error uploading to IPFS:', error);
+      throw error;
+    }*/
+    const uploadToIPFS = async (e) => {
+
+      if (fileImg) {
+          try {
+
+              const formData = new FormData();
+              formData.append("file", fileImg);
+
+              const resFile = await axios({
+                  method: "post",
+                  url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+                  data: formData,
+                  headers: {
+                      'pinata_api_key': `${process.env.REACT_APP_PINATA_API_KEY}`,
+                      'pinata_secret_api_key': `${process.env.REACT_APP_PINATA_API_SECRET}`,
+                      "Content-Type": "multipart/form-data"
+                  },
+              });
+
+              const ImgHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`;
+           console.log(ImgHash); 
+//Take a look at your Pinata Pinned section, you will see a new file added to you list.   
+
+
+
+          } catch (error) {
+              console.log("Error sending File to IPFS: ")
+              console.log(error)
+          }
+      }
+  }
+  
+
+  
+  
+  
 
   return (
     <>
@@ -107,7 +270,9 @@ export default function Mint() {
                 className="w-[50%] mt-3 rounded-md"
               />
             )}
-            <button className="bg-blue-600 p-2 rounded-2xl hover:bg-blue-400 text-2xl rounded-lg hover:text-white font-semibold mt-2">
+            <button 
+            onClick={handleUpload}
+             className="bg-blue-600 p-2 rounded-2xl hover:bg-blue-400 text-2xl rounded-lg hover:text-white font-semibold mt-2">
               Upload
             </button>
           </div>
@@ -119,7 +284,7 @@ export default function Mint() {
             </button>
           </div>
           <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% p-3 rounded-lg">
-            {islaoding ?(<>
+            {isloading ?(<>
               <button disabled className="cursor-progress text-2xl rounded-lg font-semibold hover:text-white" onClick={handleTransfer}>
               Transfer
             </button>
@@ -130,6 +295,18 @@ export default function Mint() {
             </>)}
           </div>
         </div>
+        {selectedFile && nftMetadata && (
+          <div className="border-2 border-blue-400 rounded-lg p-2 mt-5 w-[80%] md:w-auto z-20">
+            <div className="max-w-xs md:max-w-fit mx-auto">
+              <span className="block text-center text-2xl">
+                NFT Metadata
+              </span>
+              <pre className="text-center block overflow-x-auto whitespace-normal">
+                {JSON.stringify(nftMetadata, null, 2)}
+              </pre>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

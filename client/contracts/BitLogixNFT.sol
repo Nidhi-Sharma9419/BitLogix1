@@ -23,11 +23,12 @@ contract BitLogixNFT is ERC721, Ownable {
     }
 
     // Mint a new NFT with the associated IPFS URI
-    function mintNFT(address to, string memory ipfsURI) public {
+    function mintNFT(address to, string memory ipfsURI) public returns (uint256){
         _tokenIdCounter += 1;
         uint256 newTokenId = _tokenIdCounter;
         _mint(to, newTokenId);
         _setTokenURI(newTokenId, ipfsURI);
+        return newTokenId;
     }
 
     // Function to update the base URI
