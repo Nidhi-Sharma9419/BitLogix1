@@ -135,30 +135,24 @@ withdrawPlatformFees() external
 
 The BitLogixNFT Smart Contract enhances quality control within BitLogix. It allows enterprises to mint and transfer NFTs associated with products.
 
+**Inheritance**
+
+**ERC721URIStorage:** Inherits from OpenZeppelin's ERC721URIStorage, providing standard NFT functionality with URI storage.
+**Ownable:** Inherits from OpenZeppelin's Ownable, allowing for ownership control of the contract.
+
 **Functions**
 
 ```
-function mintNFT(address to, string memory ipfsURI) public
+constructor()
 ```
-* To mint a new NFT with an associated IPFS URI, call the mintNFT function
 
-```
-function setBaseURI(string memory newBaseURI) public
-```
-* The setBaseURI function allows you to update the base URI used for NFT metadata. 
+* Initializes the BitLogixNFT contract with the name "BitLogixNFT" and the symbol "BLNFT" for the NFTs.
 
 ```
-tokenURI(uint256 tokenId) public view override returns (string memory)
+mintNFT(address recipient, string memory tokenURI)
 ```
-* Retrieves token-specific URIs for NFTs.
 
-**Transferring NFTs**
-
-You can transfer NFTs between addresses using standard ERC721 transfer functions such as 'transferFrom' and 'safeTransferFrom'.
-
-**Contract Structure**
-
-BitLogixNFT is an ERC721 contract that extends the OpenZeppelin ERC721 and Ownable contracts.
+* Allows any address to mint new NFTs and assign them to specific recipients.
 
 # Troubleshooting
 
