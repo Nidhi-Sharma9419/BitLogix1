@@ -23,8 +23,8 @@ As businesses navigate the complex world of logistics, BitLogix emerges as a bea
 - **Robust Security**: Built with a decentralized architecture for data integrity.
  
 # Architecture
+![BitLogix](https://github.com/suraj719/BitLogix/assets/102855092/05a7d677-bfdb-48f4-bd23-2c62fd7546ed)
 
-!(https://github.com/suraj719/BitLogix/assets/102855092/de97f3f3-77c5-482c-bacc-a1c04d7292be)
 
 
 
