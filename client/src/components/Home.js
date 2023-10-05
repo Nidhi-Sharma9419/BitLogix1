@@ -44,9 +44,7 @@ export default function Home() {
               Revolutionize your supply chain with our DApp. The global supply
               chain market, valued at $37.4 billion by 2027, demands
               modernization. Our solution leverages decentralization, smart
-              contracts, and cryptographic security. Experience the future with
-              real-time tracking, instant payments, and token rewards, unlocking
-              endless possibilities.
+              contracts, and cryptographic security.
             </span>
           </div>
         </div>

@@ -69,12 +69,12 @@ export default function Footer() {
         <div className="flex flex-col md:w-[50%] justify-center font-medium font-Pantel mt-10 md:mt-0 ml-12 md:ml-0 md:pl-16">
           <p className="text-3xl">Visit :</p>
           <span className="mt-7">
-            <a href="#" className="hover:text-sky-200 text-2xl">
+            <a href="https://forum.trondao.org/t/bitlogix-blockchain-powered-supply-chain-magic/21022" className="hover:text-sky-200 text-2xl">
               TronDAO Submission
             </a>
           </span>
           <span className="mt-3">
-            <a href="" className="hover:text-sky-200 text-2xl">
+            <a href="https://hackatrons5.hackerearth.com/challenges/hackathon/hackatron-s5/dashboard/ecd41de/submission/draft/bitlogix/" className="hover:text-sky-200 text-2xl">
               HackerEarth Submission
             </a>
           </span>
