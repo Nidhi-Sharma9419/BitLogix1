@@ -7,7 +7,7 @@ const InventorySchema = new mongoose.Schema({
   enterpriseaddress:String,
   enterprisename:String,
   enterprisemail:String,
-  date:String,
+  date:Number,
   triggerlevel:Number,
 });
 

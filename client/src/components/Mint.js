@@ -1,15 +1,52 @@
-import React, { useState } from "react";
+import axios from 'axios';
+
+//import pinataSDK from '@pinata/sdk';
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EnterpriseNavbar from "./EnterpriseNavbar";
 import { useWeb3React } from "@web3-react/core";
+import { ethers, BrowserProvider, JsonRpcProvider } from 'ethers';
+import contractABI from '../ABI/BitLogixNFT.json';
+import {create} from 'ipfs-http-client';
+
+
+
+var Buffer = require('buffer/').Buffer;
+
+const projectId = '2985420746e8ba454e98';
+const projectSecret = '1b4b8765cc741c60b66d93e7f5c39ec54bbde638530f4b3366ef13ada818ddd8';
+
+const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
+//const pinata = pinataSDK('2985420746e8ba454e98', '1b4b8765cc741c60b66d93e7f5c39ec54bbde638530f4b3366ef13ada818ddd8');
+
 
 export default function Mint() {
   const { account } = useWeb3React();
   const navigate = useNavigate();
   const url = process.env.REACT_APP_BACKEND_URL;
+  const [recipientAddress, setRecipientAddress] = useState("");
   const { recaddress } = useParams();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [islaoding,setIsloading] = useState(false)
+  const [isloading,setIsloading] = useState(false);
+  const [nftMetadata, setNftMetadata] = useState(null);
+  
+  
+  const [name, setName] = useState(null);
+  const [imgUrl, setImgUrl] = useState(null);
+  const [description, setDescription] = useState(null);
+
+  
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  
+  const contractAddress="0x9Ce31458734476113cA4e5fB74eC443f09093f76";
+  const signer = provider.getSigner();
+  const nftContract = new ethers.Contract(contractAddress, contractABI, signer);
+  console.log("siiggnneer");
+
+  
+
+
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
 
@@ -19,28 +56,155 @@ export default function Mint() {
       setSelectedFile(imageUrl);
     }
   };
+  
 
   const handleTransfer = async (e) => {
     e.preventDefault();
     setIsloading(true);
-    await fetch(`${url}/api/v1/reward`, {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        enterpriseaddress:account,
-        recipientaddress:recaddress
-      }),
-    }).then((res) => {
+    
+    try {
+      const ipfsURI = 'https://ipfs.io/ipfs/QmPE9XtFDidyRAR9GijkKKTh5A8aroun3BvoLDqs7df44o/';
+      //const recipientAddress = recaddress;
+
+      await nftContract.mintNFT(recipientAddress, ipfsURI);
+
       setIsloading(false);
-      navigate("/qualityenterprise");
-    });
+      navigate('/qualityenterprise');
+    } catch (error) {
+      console.error(error);
+      setIsloading(false);
+    }
+
+   
+    
   }
+
+  const handleMint = async (e) => {
+    e.preventDefault()
+    
+  const metadata = new Object();
+  metadata.name = name;
+  metadata.image = url;
+  metadata.description = description;
+    
+  let tokenURI;
+    try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        const nftContract = new ethers.Contract(contractAddress, contractABI, signer);
+       /*pinata.pinJSONToIPFS(metadata)
+    .then((result) => {
+        // The IPFS hash of the uploaded metadata
+        console.log(result.IpfsHash);
+        return result.IpfsHash;
+    })
+    .catch((err) => {
+        console.error(err);
+        });*/
+        tokenURI ='https://ipfs.io/ipfs/QmPE9XtFDidyRAR9GijkKKTh5A8aroun3BvoLDqs7df44o/';
+        const trx = await nftContract.mintNFT(recipientAddress, tokenURI);
+        await trx.wait();
+
+        return trx.hash();
+        
+// Get the selected address from the provider
+       const address = await provider.getSigner().address;
+
+// Get the nonce for the selected address
+      const nonce = await provider.getTransactionCount(address);
+      const data = nftContract.interface.encodeFunctionData("mintNFT", [address, tokenURI]);
+
+        const transactionParameters = {
+          to: contractAddress,
+          from: address,
+          data: data,
+          nonce: nonce,
+        };
+        
+        console.log("Transaction Parameters:", transactionParameters);
+
+    
+
+      
+
+    
+    transactionParameters.nonce = nonce;
+
+    const tx = await provider.sendTransaction(transactionParameters);
+
+    
+    await tx.wait();
+
+  
+   
+
+    return {
+      success: true,
+      status: "✅ Check out your transaction on Etherscan: https://goerli.etherscan.io/tx/" + tx.hash,
+      
+    };
+  } catch (error) {
+    return {
+      success: false,
+      status: "😥 Something went wrong: " + error.message,
+    };
+  }
+  await fetch(`${url}/api/v1/reward`, {
+    method: "POST",
+    crossDomain: true,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      enterpriseaddress:account,
+      recipientaddress:recipientAddress
+    }),
+  }).then((res) => {
+    setIsloading(false);
+    navigate("/qualityenterprise");
+  });
+  };
+
+  const uploadToIPFS = async (e) => {
+
+    if (selectedFile) {
+        try {
+
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+
+            const resFile = await axios({
+                method: "post",
+                url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+                data: formData,
+                headers: {
+                    'pinata_api_key': `${process.env.REACT_APP_PINATA_API_KEY}`,
+                    'pinata_secret_api_key': `${process.env.REACT_APP_PINATA_API_SECRET}`,
+                    "Content-Type": "multipart/form-data"
+                },
+            });
+
+            const ImgHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`;
+         console.log(ImgHash); 
+         return ImgHash;
+//Take a look at your Pinata Pinned section, you will see a new file added to you list.   
+
+
+
+        } catch (error) {
+            console.log("Error sending File to IPFS: ")
+            console.log(error)
+            setIsloading(false);
+        }
+    }
+}
   const backgroundHeightClass = selectedFile ? "h-full" : "h-screen";
+  
+
+ 
+  
 
   return (
     <>
@@ -75,7 +239,17 @@ export default function Mint() {
               Recipient <u>Address</u>
             </span>
             <span className="text-center block overflow-x-auto whitespace-normal">
-              {recaddress}
+            <div>
+                <label className="block text-gray-700">Recipient Address</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="0x63c6770FEb4dcc984c71Ce7Df2928ED400027aC9"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                  onChange={(e) => setRecipientAddress(e.target.value)}
+                  required
+                />
+              </div>
             </span>
           </div>
         </div>
@@ -107,29 +281,83 @@ export default function Mint() {
                 className="w-[50%] mt-3 rounded-md"
               />
             )}
-            <button className="bg-blue-600 p-2 rounded-2xl hover:bg-blue-400 text-2xl rounded-lg hover:text-white font-semibold mt-2">
-              Upload
-            </button>
+            <form onSubmit={handleMint}>
+              <div>
+              <label className="block text-gray-700 mt-10">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="lorem ipsum"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+              <label className="block text-gray-700 mt-10">imageUrl</label>
+                <input
+                  type="text"
+                  name="imgUrl"
+                  placeholder="lorem ipsum"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                  onChange={(e) => setImgUrl(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+              <label className="block text-gray-700 mt-10">Description</label>
+                <input
+                  type="text"
+                  name="description"
+                  placeholder="lorem ipsum"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+              </div>
+              {isloading ? (
+                <>
+                  <button
+                    disabled
+                    // type="submit"
+                    className="cursor-progress w-full block bg-gray-500  text-white font-semibold rounded-lg
+                    px-4 py-3 mt-6"
+                  >
+                    Minting...
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    // type="submit"
+                    className="w-full block bg-green-500 hover:bg-green-400  text-white font-semibold rounded-lg
+                    px-4 py-3 mt-6"
+                  >
+                    Upload and Mint
+                  </button>
+                </>
+              )}
+
+
+            </form>
           </div>
         </div>
         <div className="flex flex-row mt-6 space-x-11 z-30">
-          <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-3 rounded-lg">
-            <button className="text-2xl rounded-lg font-semibold hover:text-white">
-              Mint
-            </button>
-          </div>
-          <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% p-3 rounded-lg">
-            {islaoding ?(<>
-              <button disabled className="cursor-progress text-2xl rounded-lg font-semibold hover:text-white" onClick={handleTransfer}>
-              Transfer
-            </button>
-            </>):(<>
-              <button className="text-2xl rounded-lg font-semibold hover:text-white" onClick={handleTransfer}>
-              Transfer
-            </button>
-            </>)}
-          </div>
+          
+          
         </div>
+        {selectedFile && nftMetadata && (
+          <div className="border-2 border-blue-400 rounded-lg p-2 mt-5 w-[80%] md:w-auto z-20">
+            <div className="max-w-xs md:max-w-fit mx-auto">
+              <span className="block text-center text-2xl">
+                NFT Metadata
+              </span>
+              <pre className="text-center block overflow-x-auto whitespace-normal">
+                {JSON.stringify(nftMetadata, null, 2)}
+              </pre>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
