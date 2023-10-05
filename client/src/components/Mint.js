@@ -9,7 +9,7 @@ import { ethers, BrowserProvider, JsonRpcProvider } from 'ethers';
 import contractABI from '../ABI/BitLogixNFT.json';
 import {create} from 'ipfs-http-client';
 //import uploadToIPFS from './uploadToIPFS';
-//const pinataSDK = require('@pinata/sdk');
+
 //const pinataSDK = require('@pinata/sdk');
 var Buffer = require('buffer/').Buffer;
 
@@ -122,12 +122,7 @@ export default function Mint() {
 
   const handleMint = async (e) => {
     e.preventDefault()
-    if (name.trim() === "" ) {
-      return {
-          success: false,
-          status: "❗Please make sure all fields are completed before minting.",
-      }
-  }
+    
   const metadata = new Object();
   metadata.name = name;
   metadata.image = url;
@@ -135,10 +130,10 @@ export default function Mint() {
     
   let tokenURI;
     try {
-        const provider = new ethers.BrowserProvider(window.ethreum);
-        const signer = provider.getSigner();
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
         const nftContract = new ethers.Contract(contractAddress, contractABI, signer);
-       /* pinata.pinJSONToIPFS(metadata)
+       /*pinata.pinJSONToIPFS(metadata)
     .then((result) => {
         // The IPFS hash of the uploaded metadata
         console.log(result.IpfsHash);
@@ -154,11 +149,11 @@ export default function Mint() {
         return trx.hash();
         
 // Get the selected address from the provider
-       const address = await provider.getSigner().getAddress();
+       const address = await provider.getSigner().address;
 
 // Get the nonce for the selected address
-        const nonce = await provider.getTransactionCount(address);
-        const data = nftContract.interface.encodeFunctionData("mintNFT", [address, tokenURI]);
+      const nonce = await provider.getTransactionCount(address);
+      const data = nftContract.interface.encodeFunctionData("mintNFT", [address, tokenURI]);
 
         const transactionParameters = {
           to: contractAddress,
@@ -226,6 +221,7 @@ export default function Mint() {
         } catch (error) {
             console.log("Error sending File to IPFS: ")
             console.log(error)
+            setIsloading(false);
         }
     }
 }
