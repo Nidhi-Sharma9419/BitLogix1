@@ -67,7 +67,7 @@ export default function ProductCardEnt() {
               </p>
               <p className="text-2xl my-3 ">
                 <span className="font-bold">Quantity: </span>
-                {data.quantity} KGs
+                {data.quantity}
               </p>
               <div className="flex flex-wrap justify-between items-center text-center gap-5 border-2 rounded-lg p-5">
                 <div className="block w-full md:w-auto">
