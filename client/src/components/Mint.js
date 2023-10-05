@@ -1,4 +1,6 @@
 import axios from 'axios';
+
+//import pinataSDK from '@pinata/sdk';
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EnterpriseNavbar from "./EnterpriseNavbar";
@@ -6,15 +8,16 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers, BrowserProvider, JsonRpcProvider } from 'ethers';
 import contractABI from '../ABI/BitLogixNFT.json';
 import {create} from 'ipfs-http-client';
-import uploadToIPFS from './uploadToIPFS';
-
+//import uploadToIPFS from './uploadToIPFS';
+//const pinataSDK = require('@pinata/sdk');
+//const pinataSDK = require('@pinata/sdk');
 var Buffer = require('buffer/').Buffer;
 
 const projectId = '2985420746e8ba454e98';
 const projectSecret = '1b4b8765cc741c60b66d93e7f5c39ec54bbde638530f4b3366ef13ada818ddd8';
 const CID = 'QmPE9XtFDidyRAR9GijkKKTh5A8aroun3BvoLDqs7df44o';
 const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
-
+//const pinata = pinataSDK('2985420746e8ba454e98', '1b4b8765cc741c60b66d93e7f5c39ec54bbde638530f4b3366ef13ada818ddd8');
 
 
 export default function Mint() {
@@ -135,8 +138,16 @@ export default function Mint() {
         const provider = new ethers.BrowserProvider(window.ethreum);
         const signer = provider.getSigner();
         const nftContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-        tokenURI = await uploadToIPFS(metadata);
+       /* pinata.pinJSONToIPFS(metadata)
+    .then((result) => {
+        // The IPFS hash of the uploaded metadata
+        console.log(result.IpfsHash);
+        return result.IpfsHash;
+    })
+    .catch((err) => {
+        console.error(err);
+        });*/
+        tokenURI ='https://ipfs.io/ipfs/QmPE9XtFDidyRAR9GijkKKTh5A8aroun3BvoLDqs7df44o/';
         const trx = await nftContract.mintNFT(recipientAddress, tokenURI);
         await trx.wait();
 
@@ -185,6 +196,39 @@ export default function Mint() {
     };
   }
   };
+
+  const uploadToIPFS = async (e) => {
+
+    if (selectedFile) {
+        try {
+
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+
+            const resFile = await axios({
+                method: "post",
+                url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+                data: formData,
+                headers: {
+                    'pinata_api_key': `${process.env.REACT_APP_PINATA_API_KEY}`,
+                    'pinata_secret_api_key': `${process.env.REACT_APP_PINATA_API_SECRET}`,
+                    "Content-Type": "multipart/form-data"
+                },
+            });
+
+            const ImgHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`;
+         console.log(ImgHash); 
+         return ImgHash;
+//Take a look at your Pinata Pinned section, you will see a new file added to you list.   
+
+
+
+        } catch (error) {
+            console.log("Error sending File to IPFS: ")
+            console.log(error)
+        }
+    }
+}
   const backgroundHeightClass = selectedFile ? "h-full" : "h-screen";
   
 
