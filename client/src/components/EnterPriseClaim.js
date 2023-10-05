@@ -10,9 +10,9 @@ export default function EnterpriseClaim() {
   const [provider, setProvider] = useState(null);
   const [contract, setContract] = useState(null);
   const [isClaimed, setIsClaimed] = useState(false);
-  const [claimedAmount, setClaimedAmount] = useState(0); // To store the claimed amount from the contract
+  const [claimedAmount, setClaimedAmount] = useState(0); 
   const {account} = useWeb3React();
-  //const [add, setAdd] = useState("");
+  
 
   
 
@@ -20,7 +20,7 @@ export default function EnterpriseClaim() {
     async function initEthers() {
       if (account) {
         try {
-          // Connect to the Ethereum provider
+          
           const providerInstance = new ethers.BrowserProvider(window.ethereum);
           setProvider(providerInstance);
 
@@ -45,7 +45,7 @@ export default function EnterpriseClaim() {
         const senderAddress = await signer.address;
 
         
-        await contract.claimTokens({ gasLimit: 200000, gasPrice: ethers.parseUnits('20000', 'gwei') });
+        await contract.claimTokens({ gasLimit: 2000000, gasPrice: ethers.parseUnits('2000000', 'gwei') });
 
         
         const claimedTokenAmount = await contract.getContractBalance(); 

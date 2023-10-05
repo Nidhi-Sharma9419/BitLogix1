@@ -8,14 +8,14 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers, BrowserProvider, JsonRpcProvider } from 'ethers';
 import contractABI from '../ABI/BitLogixNFT.json';
 import {create} from 'ipfs-http-client';
-//import uploadToIPFS from './uploadToIPFS';
-//const pinataSDK = require('@pinata/sdk');
-//const pinataSDK = require('@pinata/sdk');
+
+
+
 var Buffer = require('buffer/').Buffer;
 
 const projectId = '2985420746e8ba454e98';
 const projectSecret = '1b4b8765cc741c60b66d93e7f5c39ec54bbde638530f4b3366ef13ada818ddd8';
-const CID = 'QmPE9XtFDidyRAR9GijkKKTh5A8aroun3BvoLDqs7df44o';
+
 const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
 //const pinata = pinataSDK('2985420746e8ba454e98', '1b4b8765cc741c60b66d93e7f5c39ec54bbde638530f4b3366ef13ada818ddd8');
 
@@ -56,33 +56,7 @@ export default function Mint() {
       setSelectedFile(imageUrl);
     }
   };
-  /*
-  const handleUpload = async () => {
-    try {
-      if (selectedFile) {
-       
-        const ipfsURI = await uploadToIPFS(selectedFile);
-
-       
-        const tx = await nftContract.setBaseURI(ipfsURI);
-        await tx.wait();
-
-        //const recipientAddress = recaddress;
-
-        const tokenId = nftContract.mintNFT(recipientAddress, ipfsURI); 
-        const tokenMetadataURI = await nftContract.tokenURI(tokenId);
-        const response = await fetch(tokenMetadataURI);
-        if (response.ok) {
-          const metadata = await response.json();
-          setNftMetadata(metadata);
-        }
-      }
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      setIsLoading(false);
-    }
-  };
-  */
+  
 
   const handleTransfer = async (e) => {
     e.preventDefault();
@@ -102,32 +76,12 @@ export default function Mint() {
     }
 
    
-    await fetch(`${url}/api/v1/reward`, {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        enterpriseaddress:account,
-        recipientaddress:recipientAddress
-      }),
-    }).then((res) => {
-      setIsloading(false);
-      navigate("/qualityenterprise");
-    });
+    
   }
 
   const handleMint = async (e) => {
     e.preventDefault()
-    if (name.trim() === "" ) {
-      return {
-          success: false,
-          status: "❗Please make sure all fields are completed before minting.",
-      }
-  }
+    
   const metadata = new Object();
   metadata.name = name;
   metadata.image = url;
@@ -135,10 +89,10 @@ export default function Mint() {
     
   let tokenURI;
     try {
-        const provider = new ethers.BrowserProvider(window.ethreum);
-        const signer = provider.getSigner();
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
         const nftContract = new ethers.Contract(contractAddress, contractABI, signer);
-       /* pinata.pinJSONToIPFS(metadata)
+       /*pinata.pinJSONToIPFS(metadata)
     .then((result) => {
         // The IPFS hash of the uploaded metadata
         console.log(result.IpfsHash);
@@ -154,11 +108,11 @@ export default function Mint() {
         return trx.hash();
         
 // Get the selected address from the provider
-       const address = await provider.getSigner().getAddress();
+       const address = await provider.getSigner().address;
 
 // Get the nonce for the selected address
-        const nonce = await provider.getTransactionCount(address);
-        const data = nftContract.interface.encodeFunctionData("mintNFT", [address, tokenURI]);
+      const nonce = await provider.getTransactionCount(address);
+      const data = nftContract.interface.encodeFunctionData("mintNFT", [address, tokenURI]);
 
         const transactionParameters = {
           to: contractAddress,
@@ -195,6 +149,22 @@ export default function Mint() {
       status: "😥 Something went wrong: " + error.message,
     };
   }
+  await fetch(`${url}/api/v1/reward`, {
+    method: "POST",
+    crossDomain: true,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      enterpriseaddress:account,
+      recipientaddress:recipientAddress
+    }),
+  }).then((res) => {
+    setIsloading(false);
+    navigate("/qualityenterprise");
+  });
   };
 
   const uploadToIPFS = async (e) => {
@@ -226,6 +196,7 @@ export default function Mint() {
         } catch (error) {
             console.log("Error sending File to IPFS: ")
             console.log(error)
+            setIsloading(false);
         }
     }
 }
@@ -372,22 +343,8 @@ export default function Mint() {
           </div>
         </div>
         <div className="flex flex-row mt-6 space-x-11 z-30">
-          <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-3 rounded-lg">
-            <button className="text-2xl rounded-lg font-semibold hover:text-white">
-              Mint
-            </button>
-          </div>
-          <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% p-3 rounded-lg">
-            {isloading ?(<>
-              <button disabled className="cursor-progress text-2xl rounded-lg font-semibold hover:text-white" onClick={handleTransfer}>
-              Transfer
-            </button>
-            </>):(<>
-              <button className="text-2xl rounded-lg font-semibold hover:text-white" onClick={handleTransfer}>
-              Transfer
-            </button>
-            </>)}
-          </div>
+          
+          
         </div>
         {selectedFile && nftMetadata && (
           <div className="border-2 border-blue-400 rounded-lg p-2 mt-5 w-[80%] md:w-auto z-20">
