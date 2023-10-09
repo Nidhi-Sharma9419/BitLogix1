@@ -205,3 +205,4 @@ We would like to acknowledge the following individuals and resources for their c
 
 * **IPFS (InterPlanetary File System):** Our decentralized file storage solution is made possible by IPFS, which enables reliable and distributed storage of large files and metadata associated with NFTs.
 "# BitLogix" 
+"# BitLogix" 
