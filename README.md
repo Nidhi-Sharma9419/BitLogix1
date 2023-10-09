@@ -204,3 +204,4 @@ We would like to acknowledge the following individuals and resources for their c
 * **BitTorrent Chain:** BitLogix harnesses the power and innovation of BitTorrent Chain to facilitate secure and efficient transactions, ensuring the integrity of our supply chain management system.
 
 * **IPFS (InterPlanetary File System):** Our decentralized file storage solution is made possible by IPFS, which enables reliable and distributed storage of large files and metadata associated with NFTs.
+"# BitLogix" 
