@@ -18,7 +18,8 @@ export default function Enterprise() {
   const [email,setEmail] = useState();
   const [id, setID] = useState();
   const { account } = useWeb3React();
-  async function registerEnterprise() {
+  async function registerEnterprise(e) {
+    e.preventDefault();
     try {
       if (!account) {
         console.error("No connected Ethereum account");

@@ -23,7 +23,8 @@ export default function Recipient() {
   const [detail, setDetails] = useState();
   const [id, setID] = useState();
   const { account } = useWeb3React();
-    async function registerRecipient(){
+    async function registerRecipient(e){
+      e.preventDefault();
       try{
         if(!account){
           console.error("No connected Ethereum account");
@@ -97,6 +98,8 @@ export default function Recipient() {
           className="px-5 flex items-center justify-center"
           style={{ width: "30rem" }}
         >
+          <form onSubmit={registerRecipient} className="w-full h-100">
+
           <div className="w-full h-100">
             
             <div>
@@ -152,7 +155,7 @@ export default function Recipient() {
                   // type="submit"
                   className="w-full block bg-indigo-500 hover:bg-indigo-400  text-white font-semibold rounded-lg
                   px-4 py-3 mt-6"
-                  onClick={registerRecipient}
+                  // onClick={registerRecipient}
                 >
                   Create Account
                 </button>
@@ -160,6 +163,7 @@ export default function Recipient() {
             )}
             
           </div>
+          </form>
         </div>
       </div>
     </>
